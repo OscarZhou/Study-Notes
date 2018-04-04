@@ -14,14 +14,14 @@ func main() {
 					"must":[
 					   {
 						  "term":{
-							 "CurrencyCodeFrom":"USD"
+							 "Status":"CurrencyActivated"
 						  }
 					   },
 					   {
-						  "term":{
-							 "CurrencyCodeTo":"NZD"
-						  }
-					   }
+						"term":{
+						   "Code":"USD"
+						}
+					 }
 					]
 				 }
 			  }
