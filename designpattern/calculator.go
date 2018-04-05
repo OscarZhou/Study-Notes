@@ -6,17 +6,12 @@ import (
 )
 
 func main() {
-	oper, ok := createOperate("+").(Oper)
-	if !ok {
-		fmt.Println("the program is failure")
-	}
-	oper.operator1 = 1
-	oper.operator2 = 2
-	fmt.Println("THE RESULT IS ", oper.GetResult())
+	oper := createOperate("+")
+	fmt.Println("THE RESULT IS ", oper.GetResult(3.5, 4.4))
 }
 
-func createOperate(operate string) interface{} {
-	var oper interface{}
+func createOperate(operate string) Operation {
+	var oper Operation
 
 	switch operate {
 	case "+":
@@ -37,55 +32,48 @@ func createOperate(operate string) interface{} {
 }
 
 type Operation interface {
-	GetResult() string
+	GetResult(op1, op2 float64) string
 }
 
 type Oper struct {
-	operator1 float64
-	operator2 float64
-	result    string
 }
 
-func (op *Oper) GetResult() string {
+func (op *Oper) GetResult(op1, op2 float64) string {
 	return ""
 }
 
 type OperationAdd struct {
-	Oper
+	*Oper
 }
 
 type OperationSub struct {
-	Oper
+	*Oper
 }
 
 type OperationMul struct {
-	Oper
+	*Oper
 }
 
 type OperationDiv struct {
-	Oper
+	*Oper
 }
 
-func (op *OperationAdd) GetResult() string {
-	op.result = strconv.FormatFloat(op.operator1+op.operator2, 'E', -1, 64)
-	return op.result
+func (op *OperationAdd) GetResult(op1, op2 float64) string {
+	return strconv.FormatFloat(op1+op2, 'f', -1, 64)
 }
 
-func (op *OperationSub) GetResult() string {
-	op.result = strconv.FormatFloat(op.operator1-op.operator2, 'E', -1, 64)
-	return op.result
+func (op *OperationSub) GetResult(op1, op2 float64) string {
+	return strconv.FormatFloat(op1-op2, 'f', -1, 64)
 }
 
-func (op *OperationMul) GetResult() string {
-	op.result = strconv.FormatFloat(op.operator1*op.operator2, 'E', -1, 64)
-	return op.result
+func (op *OperationMul) GetResult(op1, op2 float64) string {
+	return strconv.FormatFloat(op1*op2, 'f', -1, 64)
 }
 
-func (op *OperationDiv) GetResult() string {
-	if op.operator1 == 0.0 {
+func (op *OperationDiv) GetResult(op1, op2 float64) string {
+	if op1 == 0.0 {
 		fmt.Println("operator 1 can't be zero")
 		return ""
 	}
-	op.result = strconv.FormatFloat(op.operator1/op.operator2, 'E', -1, 64)
-	return op.result
+	return strconv.FormatFloat(op1/op2, 'f', -1, 64)
 }
