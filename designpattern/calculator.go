@@ -7,7 +7,7 @@ import (
 
 func main() {
 	oper := createOperate("+")
-	fmt.Println("THE RESULT IS ", oper.GetResult(3.5, 4.4))
+	fmt.Println("The result is ", oper.GetResult(3.5, 4.4))
 }
 
 func createOperate(operate string) Operation {
@@ -35,27 +35,16 @@ type Operation interface {
 	GetResult(op1, op2 float64) string
 }
 
-type Oper struct {
-}
-
-func (op *Oper) GetResult(op1, op2 float64) string {
-	return ""
-}
-
 type OperationAdd struct {
-	*Oper
 }
 
 type OperationSub struct {
-	*Oper
 }
 
 type OperationMul struct {
-	*Oper
 }
 
 type OperationDiv struct {
-	*Oper
 }
 
 func (op *OperationAdd) GetResult(op1, op2 float64) string {
