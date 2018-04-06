@@ -22,14 +22,14 @@ func TestTrimJSONString(t *testing.T) {
 		"sort":[
 		   {
 			  "order":{
-				 "CreatedAt":"desc",
-				 "Code":"desc"
+				 "Code":"desc",
+				 "CreatedAt":"desc"
 			  }
 		   }
 		]
 	 }`
 
-	testDataAfter := `{"query":{"filtered":{"filter":{"bool":{"must":[{"term":{"Status":"CurrencyActivated"}}]}}}},"sort":[{"order":{"CreatedAt":"desc","Code":"desc"}}]}`
+	testDataAfter := `{"query":{"filtered":{"filter":{"bool":{"must":[{"term":{"Status":"CurrencyActivated"}}]}}}},"sort":[{"order":{"Code":"desc","CreatedAt":"desc"}}]}`
 
 	result := TrimJSONString(testDataBefore)
 
@@ -38,4 +38,5 @@ func TestTrimJSONString(t *testing.T) {
 	}
 
 	t.Log("testing successfully!")
+	t.Log(result)
 }
