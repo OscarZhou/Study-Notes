@@ -67,7 +67,13 @@ func RequestServiceTokenFromTRKD(ricNames []string, ch chan<- models.TRKDFXRespo
 				models.ItemRequest{
 					Fields:      configs.LocalConfig.ForexRateFields,
 					RequestKeys: requestKeys,
-					Scope:       configs.LocalConfig.ForexRateScope,
+					// []models.RequestKey{
+					// 	models.RequestKey{
+					// 		Name:     ricNames,
+					// 		NameType: "RIC",
+					// 	},
+					// },
+					Scope: configs.LocalConfig.ForexRateScope,
 				},
 			},
 			TrimResponse:        false,

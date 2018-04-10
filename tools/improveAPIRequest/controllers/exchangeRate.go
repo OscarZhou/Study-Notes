@@ -6,6 +6,7 @@ import (
 	"Study-Notes/tools/improveAPIRequest/utils"
 	"fmt"
 	"log"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 
 var (
 	currencyList = make(map[string]bool)
+	ricList      = make(map[string]bool)
 )
 
 func UpdateExchangeRatesPeriodically(db *gorm.DB) (int, error) {
@@ -25,33 +27,37 @@ func UpdateExchangeRatesPeriodically(db *gorm.DB) (int, error) {
 		ricNames          []string
 	)
 
+	// sql := "SELECT DISTINCT(trkdric) FROM " + utils.GetDBTableNameByModel(db, &models.CurrencyRelation{})
+	// if err := db.Raw(sql).Scan(&currencyRelations).Error; err != nil {
+	// 	return 0, err
+	// }
+
 	if err := db.Find(&currencyRelations).Error; err != nil {
 		return 0, err
 	}
 
 	for _, v := range currencyRelations {
 		currencyList[v.TRKDCurrencyCode] = true
+
+		if _, ok := ricList[v.TRKDRIC]; !ok {
+			ricList[v.TRKDRIC] = true
+		}
 	}
 
-	elapsed := time.Since(start)
-	fmt.Printf("before iterating currency relations took %s\n", elapsed)
-	start = time.Now()
-
-	for _, v := range currencyRelations {
-		ricNames = append(ricNames, v.TRKDRIC)
+	keys := reflect.ValueOf(ricList).MapKeys()
+	for i := 0; i < len(keys); i++ {
+		ricNames = append(ricNames, keys[i].String())
 	}
-
-	numRIC := len(ricNames)
-	numGroup := numRIC / 10
 
 	ch := make(chan models.TRKDFXResponse)
 	var indexStart = 0
 	var indexEnd = 0
-	for i := 0; i < 10+((numRIC%10)/numGroup); i++ {
+	numRic := 2
+	for i := 0; i < len(ricNames)/numRic; i++ {
 		var rn []string
-		if i != 10+((numRIC%10)/numGroup)-1 {
+		if i != len(ricNames)/numRic-1 {
 			indexStart = indexEnd
-			indexEnd = indexEnd + numGroup
+			indexEnd = indexEnd + numRic
 			rn = append(rn, ricNames[indexStart:indexEnd]...)
 		} else {
 			rn = append(rn, ricNames[indexEnd:]...)
@@ -65,10 +71,8 @@ func UpdateExchangeRatesPeriodically(db *gorm.DB) (int, error) {
 		}()
 	}
 
-	for i := 0; i < 10; i++ {
-		var fx models.TRKDFXResponse
-		fx = <-ch
-		fxResponse = append(fxResponse, fx)
+	for i := 0; i < len(ricNames)/numRic; i++ {
+		fxResponse = append(fxResponse, <-ch)
 	}
 
 	for _, v := range fxResponse {
@@ -118,7 +122,7 @@ func UpdateExchangeRatesPeriodically(db *gorm.DB) (int, error) {
 		}
 	}
 
-	elapsed = time.Since(start)
+	elapsed := time.Since(start)
 	fmt.Printf("request API and iterates all data took %s\n", elapsed)
 	start = time.Now()
 	insertExchangeRateSQL := `INSERT INTO ` + utils.GetDBTableNameByModel(db, &models.ExchangeRate{}) +
