@@ -1,1 +1,11 @@
 tools/improveAPIRequest/configs/local.ini
+algorithm/breadthFirstSearch/run_one.bat
+algorithm/breadthFirstSearch/run_all.bat
+algorithm/breadthFirstSearch/queue.h
+algorithm/breadthFirstSearch/queue.cpp
+algorithm/breadthFirstSearch/algorithm.h
+algorithm/breadthFirstSearch/graphics.cpp
+algorithm/breadthFirstSearch/graphics.h
+algorithm/breadthFirstSearch/Main.cpp
+algorithm/breadthFirstSearch/makefile
+algorithm/breadthFirstSearch/puzzle.h
