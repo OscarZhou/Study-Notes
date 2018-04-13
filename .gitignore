@@ -9,3 +9,6 @@ algorithm/breadthFirstSearch/graphics.h
 algorithm/breadthFirstSearch/Main.cpp
 algorithm/breadthFirstSearch/makefile
 algorithm/breadthFirstSearch/puzzle.h
+algorithm/breadthFirstSearch/algorithm.o
+*.o
+algorithm/breadthFirstSearch/testorder.txt

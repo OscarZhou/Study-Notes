@@ -19,8 +19,8 @@ string breadthFirstSearch(string const initialState, string const goalState, int
     //add necessary variables here
 
 	Puzzle startPuzzle(initialState, goalState);
-	Queue expandedQueue(startPuzzle);
-	map<string, bool> expandedList;
+	Queue Q(startPuzzle);//1
+	
 
     //algorithm implementation
 	// cout << "------------------------------" << endl;
@@ -30,60 +30,46 @@ string breadthFirstSearch(string const initialState, string const goalState, int
 	startTime = clock();
 
 	while(true){
-		if(expandedQueue.IsEmpty()){
+		if(Q.IsEmpty()){
 			break;
 		}
-		numOfStateExpansions++;
 
-		Puzzle currentPuzzle = expandedQueue.Peek();
-		if(expandedList[currentPuzzle.getString()]){
-			expandedQueue.Dequeue();
-			continue;
-		}
-		expandedList[currentPuzzle.getString()] = true;		
-		
+		Puzzle currentPuzzle = Q.Peek();
 		if(currentPuzzle.goalMatch()){
 			path = currentPuzzle.getPath();
+			maxQLength = Q.MaxLength();
 			break;
 		}
 
-		expandedQueue.Dequeue();
-		if(currentPuzzle.canMoveLeft()){
-			Puzzle *temPuzzle = currentPuzzle.moveLeft();
-			if (!expandedList[temPuzzle->getString()]){
-				expandedQueue.Enqueue(*temPuzzle);	
-				
-			}
-			delete temPuzzle;
+		Q.Dequeue();
+		numOfStateExpansions++;
+		if(currentPuzzle.canMoveUp()){
+			Puzzle *temPuzzle = currentPuzzle.moveUp();
+			Q.Enqueue(*temPuzzle);
+			// delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveRight()){
 			Puzzle *temPuzzle = currentPuzzle.moveRight();
-			if (!expandedList[temPuzzle->getString()]){
-				expandedQueue.Enqueue(*temPuzzle);	
-			}
-			delete temPuzzle;
-		}
-
-		if(currentPuzzle.canMoveUp()){
-			Puzzle *temPuzzle = currentPuzzle.moveUp();
-			if (!expandedList[temPuzzle->getString()]){
-				expandedQueue.Enqueue(*temPuzzle);	
-			}
-			delete temPuzzle;
+			Q.Enqueue(*temPuzzle);
+			// delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveDown()){
 			Puzzle *temPuzzle = currentPuzzle.moveDown();
-			if (!expandedList[temPuzzle->getString()]){
-				expandedQueue.Enqueue(*temPuzzle);	
-				
-			}
-			delete temPuzzle;
+			Q.Enqueue(*temPuzzle);
+			// delete temPuzzle;
 		}
-		// if (maxQLength < expandedQueue.Length()){
-		// 	maxQLength = expandedQueue.Length();
-		// }
+
+		if(currentPuzzle.canMoveLeft()){
+			Puzzle *temPuzzle = currentPuzzle.moveLeft();
+			Q.Enqueue(*temPuzzle);
+			// delete temPuzzle;
+		}
+		if (Q.MaxLength() > 5000000){
+			path = currentPuzzle.getPath();
+			break;
+		}
 	}
 	
 	//srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
@@ -94,6 +80,7 @@ string breadthFirstSearch(string const initialState, string const goalState, int
 	//***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
 	//path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
+	
 	return path;		
 		
 }
