@@ -98,7 +98,7 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
     //add necessary variables here
 	Puzzle startPuzzle(initialState, goalState);
 	Queue Q(startPuzzle);
-	map<string, bool> visitList;
+	map<string, bool> expandedList;
 
     //algorithm implementation
 	// cout << "------------------------------" << endl;
@@ -115,11 +115,11 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
 		}
 
 		Puzzle currentPuzzle = Q.Peek();
-		if(visitList[currentPuzzle.getString()]){
+		if(expandedList[currentPuzzle.getString()]){
 			Q.Dequeue();
 			continue;
 		}	
-		visitList[currentPuzzle.getString()] = true;
+		expandedList[currentPuzzle.getString()] = true;
 		if(currentPuzzle.goalMatch()){
 			path = currentPuzzle.getPath();
 			break;
@@ -179,7 +179,12 @@ string progressiveDeepeningSearch_No_VisitedList(string const initialState, stri
     string path;
 	clock_t startTime;
     //add necessary variables here
-
+    int currentThreshold = 1;
+    int threshold = 15;
+	Puzzle startPuzzle(initialState, goalState);
+	startPuzzle.setDepth(0);
+	Stack Q(startPuzzle);	
+	
 
     //algorithm implementation
 	// cout << "------------------------------" << endl;
@@ -187,15 +192,75 @@ string progressiveDeepeningSearch_No_VisitedList(string const initialState, stri
  //    cout << "------------------------------" << endl;
 
 	startTime = clock();
+
+	while(true){
+		if(Q.IsEmpty()){
+			if(currentThreshold < threshold){
+				currentThreshold++;
+				Q.Push(startPuzzle);
+				continue;
+			}
+			break;
+		}
+		
+		Puzzle currentPuzzle = Q.Top();
+		if(currentPuzzle.getDepth() <= currentThreshold){
+			if(currentPuzzle.goalMatch()){
+				path = currentPuzzle.getPath();
+				maxQLength = Q.MaxLength();
+				break;
+			}
+
+			Q.Pop();
+			numOfStateExpansions++;
+
+			if(currentPuzzle.canMoveLeft(currentThreshold)){
+				Puzzle *temPuzzle = currentPuzzle.moveLeft();
+				temPuzzle->setDepth(currentPuzzle.getDepth()+1);
+				Q.Push(*temPuzzle);
+				delete temPuzzle;
+			}
+
+			if(currentPuzzle.canMoveDown(currentThreshold)){
+				Puzzle *temPuzzle = currentPuzzle.moveDown();
+				temPuzzle->setDepth(currentPuzzle.getDepth()+1);
+				Q.Push(*temPuzzle);
+				delete temPuzzle;
+			}
+
+			if(currentPuzzle.canMoveRight(currentThreshold)){
+				Puzzle *temPuzzle = currentPuzzle.moveRight();
+				temPuzzle->setDepth(currentPuzzle.getDepth()+1);
+				Q.Push(*temPuzzle);
+				delete temPuzzle;
+			}
+
+			if(currentPuzzle.canMoveUp(currentThreshold)){
+				Puzzle *temPuzzle = currentPuzzle.moveUp();
+				temPuzzle->setDepth(currentPuzzle.getDepth()+1);
+				Q.Push(*temPuzzle);
+				delete temPuzzle;
+			}
+
+			if (Q.MaxLength() > 5000000){
+				path = currentPuzzle.getPath();
+				break;
+			}
+		}else{
+			break;
+		}
+	}
+
+
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	maxQLength= rand() % 500; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
+	// maxQLength= rand() % 500; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
+	// numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 
 	
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
+	//path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
 	return path;		
 		
 }
