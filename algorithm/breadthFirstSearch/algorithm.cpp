@@ -46,25 +46,25 @@ string breadthFirstSearch(string const initialState, string const goalState, int
 		if(currentPuzzle.canMoveUp()){
 			Puzzle *temPuzzle = currentPuzzle.moveUp();
 			Q.Enqueue(*temPuzzle);
-			// delete temPuzzle;
+			delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveRight()){
 			Puzzle *temPuzzle = currentPuzzle.moveRight();
 			Q.Enqueue(*temPuzzle);
-			// delete temPuzzle;
+			delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveDown()){
 			Puzzle *temPuzzle = currentPuzzle.moveDown();
 			Q.Enqueue(*temPuzzle);
-			// delete temPuzzle;
+			delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveLeft()){
 			Puzzle *temPuzzle = currentPuzzle.moveLeft();
 			Q.Enqueue(*temPuzzle);
-			// delete temPuzzle;
+			delete temPuzzle;
 		}
 		if (Q.MaxLength() > 5000000){
 			path = currentPuzzle.getPath();
@@ -97,7 +97,8 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
 	clock_t startTime;
     //add necessary variables here
 	Puzzle startPuzzle(initialState, goalState);
-	Queue expandedQueue(startPuzzle);
+	Queue Q(startPuzzle);
+	map<string, bool> visitList;
 
     //algorithm implementation
 	// cout << "------------------------------" << endl;
@@ -109,52 +110,60 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
 	
 
 	while(true){
-		if(expandedQueue.IsEmpty()){
+		if(Q.IsEmpty()){
 			break;
 		}
-		numOfStateExpansions++;
 
-		Puzzle currentPuzzle = expandedQueue.Peek();
-	
+		Puzzle currentPuzzle = Q.Peek();
+		if(visitList[currentPuzzle.getString()]){
+			Q.Dequeue();
+			continue;
+		}	
+		visitList[currentPuzzle.getString()] = true;
 		if(currentPuzzle.goalMatch()){
 			path = currentPuzzle.getPath();
 			break;
 		}
 
-		expandedQueue.Dequeue();
-		if(currentPuzzle.canMoveLeft()){
-			Puzzle *temPuzzle = currentPuzzle.moveLeft();
-			expandedQueue.Enqueue(*temPuzzle);
+		Q.Dequeue();
+		numOfStateExpansions++;
+		if(currentPuzzle.canMoveUp()){
+			Puzzle *temPuzzle = currentPuzzle.moveUp();
+			Q.Enqueue(*temPuzzle);
 			delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveRight()){
-			Puzzle *temPuzzle = currentPuzzle.moveLeft();
-			expandedQueue.Enqueue(*temPuzzle);
-			delete temPuzzle;
-		}
-
-		if(currentPuzzle.canMoveUp()){
-			Puzzle *temPuzzle = currentPuzzle.moveLeft();
-			expandedQueue.Enqueue(*temPuzzle);
+			Puzzle *temPuzzle = currentPuzzle.moveRight();
+			Q.Enqueue(*temPuzzle);
 			delete temPuzzle;
 		}
 
 		if(currentPuzzle.canMoveDown()){
-			Puzzle *temPuzzle = currentPuzzle.moveLeft();
-			expandedQueue.Enqueue(*temPuzzle);
+			Puzzle *temPuzzle = currentPuzzle.moveDown();
+			Q.Enqueue(*temPuzzle);
 			delete temPuzzle;
+		}
+
+		if(currentPuzzle.canMoveLeft()){
+			Puzzle *temPuzzle = currentPuzzle.moveLeft();
+			Q.Enqueue(*temPuzzle);
+			delete temPuzzle;
+		}
+		if (Q.MaxLength() > 5000000){
+			path = currentPuzzle.getPath();
+			break;
 		}
 	}
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	maxQLength= rand() % 800; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
+	//maxQLength= rand() % 800; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
 	// numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 
 
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
+	//path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
 	return path;		
 		
 }
