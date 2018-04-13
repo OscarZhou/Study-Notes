@@ -22,6 +22,7 @@ public:
 	int Peek();
 	void Dequeue();
 	int IsEmpty();
+	int Length();
 	void Print();
 };
 
@@ -75,6 +76,19 @@ int Queue::IsEmpty(){
 	return false;
 }
 
+int Queue::Length(){
+	Puzzle *b = head;
+	int length = 0;
+	if (b != NULL){
+		length = 1;
+	}
+	while(b->next != NULL){
+		length++;
+		b = b->next;
+	}
+	return length;
+}
+
 void Queue::Print(){
 	if(!IsEmpty()){
 		Puzzle *cur = head;
@@ -90,14 +104,21 @@ int main(){
 	Queue q;
 	q.Print();
 	q.Enqueue(2);
+	cout<<"length="<<q.Length()<<endl;
 	q.Print();
 	q.Enqueue(3);
+	cout<<"length="<<q.Length()<<endl;
 	q.Enqueue(4);
+	cout<<"length="<<q.Length()<<endl;
 	q.Enqueue(5);
+	cout<<"length="<<q.Length()<<endl;
 	q.Enqueue(6);
+	cout<<"length="<<q.Length()<<endl;
 	q.Print();
 	q.Dequeue();
+	cout<<"length="<<q.Length()<<endl;
 	q.Dequeue();
+	cout<<"length="<<q.Length()<<endl;
 	q.Print();
 
 }
