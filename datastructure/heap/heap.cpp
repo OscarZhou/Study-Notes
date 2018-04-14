@@ -91,9 +91,9 @@ void Heap::DeleteRoot(){
 		if(leftChildIndex>last){
 			break;
 		}else{
-			if (rightChildIndex==last){
-				if(puzzle[parentIndex].cost<puzzle[rightChildIndex].cost){
-					swap(puzzle[parentIndex],puzzle[rightChildIndex]);
+			if (rightChildIndex>=last){
+				if(puzzle[parentIndex].cost<puzzle[leftChildIndex].cost){
+					swap(puzzle[parentIndex],puzzle[leftChildIndex]);
 
 				}
 				break;
@@ -102,7 +102,7 @@ void Heap::DeleteRoot(){
 	}
 }
 
-int Heap::IsEmpty(){
+bool Heap::IsEmpty(){
 	return puzzle.empty();
 }
 
@@ -125,11 +125,15 @@ int main(){
 	q.Print();
 	q.InsertHeap(11);
 	q.Print();
+	q.InsertHeap(11);
+	q.Print();
 	q.InsertHeap(8);
 	q.Print();
 	q.InsertHeap(7);
 	q.Print();
 	q.InsertHeap(2);
+	q.InsertHeap(11);
+	q.Print();
 	q.InsertHeap(9);
 	q.Print();
 	q.DeleteRoot();
