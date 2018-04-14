@@ -368,14 +368,19 @@ string progressiveDeepeningSearch_with_NonStrict_VisitedList(string const initia
 	
 
 string aStar_ExpandedList(string const initialState, string const goalState, int &numOfStateExpansions, int& maxQLength, 
-                               float &actualRunningTime, int &numOfDeletionsFromMiddleOfHeap, int &numOfLocalLoopsAvoided, int &numOfAttemptedNodeReExpansions, heuristicFunction heuristic){
-											 
-   string path;
-   clock_t startTime;
-   
-   numOfDeletionsFromMiddleOfHeap=0;
-   numOfLocalLoopsAvoided=0;
-   numOfAttemptedNodeReExpansions=0;
+                               float &actualRunningTime, int &numOfDeletionsFromMiddleOfHeap, int &numOfLocalLoopsAvoided, int &numOfAttemptedNodeReExpansions, heuristicFunction heuristic){										 
+	string path;
+	clock_t startTime;
+
+	numOfDeletionsFromMiddleOfHeap=0;
+	numOfLocalLoopsAvoided=0;
+	numOfAttemptedNodeReExpansions=0;
+
+   	Puzzle startPuzzle(initialState, goalState);
+   	startPuzzle.updateHCost(heuristic);
+   	startPuzzle.updateFCost();
+	Heap PriorityQ(startPuzzle);	
+	map<string, bool> expandedList;
 
 
     // cout << "------------------------------" << endl;
@@ -383,16 +388,91 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
     // cout << "------------------------------" << endl;
 	actualRunningTime=0.0;	
 	startTime = clock();
+
+	while(true){
+		if(PriorityQ.IsEmpty()){
+			break;
+		}
+
+		Puzzle currentPuzzle = PriorityQ.Root();
+		
+		if(currentPuzzle.goalMatch()){
+			cout<<"1"<<endl;
+			path = currentPuzzle.getPath();
+			expandedList.clear();
+			break;
+		}
+		PriorityQ.Print();
+
+		if(expandedList[currentPuzzle.getString()]){
+			PriorityQ.Print();
+			PriorityQ.DeleteRoot();
+			continue;
+		}	
+		PriorityQ.Print();
+
+		expandedList[currentPuzzle.getString()] = true;
+		PriorityQ.DeleteRoot();
+
+		PriorityQ.Print();
+
+		numOfStateExpansions++;
+		if(currentPuzzle.canMoveUp()){
+			Puzzle *temPuzzle = currentPuzzle.moveUp();
+			if(!expandedList[temPuzzle->getString()]){
+				temPuzzle->updateHCost(heuristic);
+   				temPuzzle->updateFCost();
+   				PriorityQ.InsertOrReplace(*temPuzzle);
+
+			}
+			delete temPuzzle;
+		}
+PriorityQ.Print();
+		if(currentPuzzle.canMoveRight()){
+			Puzzle *temPuzzle = currentPuzzle.moveRight();
+			if(!expandedList[temPuzzle->getString()]){
+				temPuzzle->updateHCost(heuristic);
+   				temPuzzle->updateFCost();
+   				PriorityQ.InsertOrReplace(*temPuzzle);
+			}
+			delete temPuzzle;
+		}
+PriorityQ.Print();
+		if(currentPuzzle.canMoveDown()){
+			Puzzle *temPuzzle = currentPuzzle.moveDown();
+			if(!expandedList[temPuzzle->getString()]){
+				temPuzzle->updateHCost(heuristic);
+   				temPuzzle->updateFCost();
+   				PriorityQ.InsertOrReplace(*temPuzzle);
+			}
+			delete temPuzzle;
+		}
+PriorityQ.Print();
+		if(currentPuzzle.canMoveLeft()){
+			Puzzle *temPuzzle = currentPuzzle.moveLeft();
+			if(!expandedList[temPuzzle->getString()]){
+				temPuzzle->updateHCost(heuristic);
+   				temPuzzle->updateFCost();
+   				PriorityQ.InsertOrReplace(*temPuzzle);
+			}
+			delete temPuzzle;
+		}
+		if (PriorityQ.MaxLength() > 5000000){
+			path = currentPuzzle.getPath();
+			break;
+		}
+		PriorityQ.Print();
+	}
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	maxQLength= rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	numOfStateExpansions = rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
+	// maxQLength= rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
+	// numOfStateExpansions = rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 
 
 	
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	path = "DDRRLLLUUU"; //this is just a dummy path for testing the function
+	// path = "DDRRLLLUUU"; //this is just a dummy path for testing the function
 	             
 	return path;		
 		

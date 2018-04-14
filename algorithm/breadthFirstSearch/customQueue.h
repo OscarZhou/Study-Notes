@@ -1,5 +1,6 @@
 #include "puzzle.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -7,6 +8,9 @@ struct Board {
 	Puzzle* puzzle;
 	Board* next;
 };
+
+
+/// Queue for BFS
 
 class Queue
 {
@@ -28,6 +32,8 @@ public:
 	void Print();
 };
 
+
+// Queue for PFS
 
 class Stack
 {
@@ -51,3 +57,28 @@ public:
 
 
 
+
+// Queue for Astar
+
+
+class Heap{
+private:
+	std::vector<Puzzle> v;
+	int last;
+	int t;
+public:
+	Heap();
+	Heap( Puzzle &p);
+	~Heap();
+
+	void InsertHeap( Puzzle &p);
+	Puzzle Root();
+	void DeleteRoot();
+	void Delete( Puzzle &p);
+	bool IsEmpty();
+	int Length();
+	void InsertOrReplace( Puzzle &p);
+	int MaxLength();
+
+	void Print();
+};
