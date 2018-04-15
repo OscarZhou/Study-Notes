@@ -121,15 +121,29 @@ int Puzzle::h(heuristicFunction hFunction){
 		        for(int i=0; i < 3; i++){
 					for(int j=0; j < 3; j++){	
 						if (i != y0 && j != x0){
-							if(board[i][j] != goalBoard[i][j]){
-								// h+=							
+							if (board[i][j] == 1){
+								sum += (abs(i-0)+abs(j-0));
+							}else if(board[i][j] == 2){
+								sum += (abs(i-1)+abs(j-0));
+							}else if(board[i][j] == 3){
+								sum += (abs(i-2)+abs(j-0));
+							}else if(board[i][j] == 4){
+								sum += (abs(i-2)+abs(j-1));
+							}else if(board[i][j] == 5){
+								sum += (abs(i-2)+abs(j-2));
+							}else if(board[i][j] == 6){
+								sum += (abs(i-1)+abs(j-2));
+							}else if(board[i][j] == 7){
+								sum += (abs(i-0)+abs(j-2));
+							}else if(board[i][j] == 8){
+								sum += (abs(i-0)+abs(j-1));
 							}
+
 						}
 					} 
 				}
 		        h = sum; 					
-		        break;         
-		           
+		        break;          
 	};
 	
 	return h;

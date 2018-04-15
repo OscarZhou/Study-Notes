@@ -65,6 +65,7 @@ class Heap{
 private:
 	std::vector<Puzzle> v;
 	int last;
+	int maxLength;
 	int t;
 public:
 	Heap();
@@ -81,4 +82,5 @@ public:
 	int MaxLength();
 
 	void Print();
+	void PrintLast();
 };

@@ -395,34 +395,40 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 		}
 
 		Puzzle currentPuzzle = PriorityQ.Root();
-		
-		if(currentPuzzle.goalMatch()){
-			path = currentPuzzle.getPath();
-			expandedList.clear();
-			break;
-		}
-
 		if(expandedList[currentPuzzle.getString()]){
-			PriorityQ.Print();
+			// PriorityQ.PrintLast();
 			PriorityQ.DeleteRoot();
 			continue;
 		}	
 
 		expandedList[currentPuzzle.getString()] = true;
+		// cout<<"the current string = "<<currentPuzzle.getString()<<", fcost = "<<currentPuzzle.getFCost()<<endl;
+		PriorityQ.Print();
+	 	
+		if(currentPuzzle.goalMatch()){
+			path = currentPuzzle.getPath();
+			expandedList.clear();
+			break;
+		}
+	
 		PriorityQ.DeleteRoot();
-
 		numOfStateExpansions++;
 		if(currentPuzzle.canMoveUp()){
 			Puzzle *temPuzzle = currentPuzzle.moveUp();
+			// cout<<"move up string= "<<temPuzzle->getString()<<endl;
 			if(!expandedList[temPuzzle->getString()]){
+
 				temPuzzle->updateHCost(heuristic);
+				
    				temPuzzle->updateFCost();
    				PriorityQ.InsertOrReplace(*temPuzzle);
 
+   				// cout<<"move up fcost = "<<temPuzzle->getFCost()<<endl;
 			}
 			delete temPuzzle;
 		}
 		if(currentPuzzle.canMoveRight()){
+			// cout<<"move right"<<endl;
 			Puzzle *temPuzzle = currentPuzzle.moveRight();
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
@@ -432,6 +438,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			delete temPuzzle;
 		}
 		if(currentPuzzle.canMoveDown()){
+			// cout<<"move down"<<endl;
 			Puzzle *temPuzzle = currentPuzzle.moveDown();
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
@@ -441,6 +448,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			delete temPuzzle;
 		}
 		if(currentPuzzle.canMoveLeft()){
+			// cout<<"move left"<<endl;
 			Puzzle *temPuzzle = currentPuzzle.moveLeft();
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
@@ -464,7 +472,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
 	// path = "DDRRLLLUUU"; //this is just a dummy path for testing the function
-	             
+	            
 	return path;		
 		
 }

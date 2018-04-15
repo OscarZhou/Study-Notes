@@ -158,11 +158,11 @@ int Stack::MaxLength(){
 
 
 Heap::Heap(){
-	last = -1;
+	last = maxLength = -1;
 }
 
 Heap::Heap(const Puzzle &p){
-	last = -1;
+	last = maxLength = -1;
 	v.push_back(p);
 	last += 1;
 	t= 0;
@@ -177,6 +177,9 @@ Heap::~Heap(){
 void Heap::InsertHeap(const Puzzle &p){
 	v.push_back(p);
 	last += 1;
+	if(last>maxLength){
+		maxLength = last;
+	}
 	if(last == 0){
 		return;
 	}
@@ -228,7 +231,7 @@ void Heap::DeleteRoot(){
 			swap(v[parentIndex],v[rightChildIndex]);
 			parentIndex = rightChildIndex;
 		}
-		
+
 		leftChildIndex = parentIndex*2+1;
 		rightChildIndex = parentIndex*2+2;
 
@@ -252,18 +255,35 @@ void Heap::Delete(const Puzzle &p){
 	
 	int parentIndex = 0;
 	Puzzle deletePuzzle = v[0];
-	for(std::vector<Puzzle>::iterator it = v.begin() ; it!= v.end();++it,++parentIndex){
+
+	for(std::vector<Puzzle>::iterator it = v.begin() ; it!= v.end();++it){
 		if((*it).getString() == p.getString()){
 			deletePuzzle = *it;
+			break;
 		}
+		parentIndex++;
 	}
-
 	v[parentIndex] = v[last];
 	v.pop_back();
 	last -= 1;
 	
+	if (last <1){ 
+		return;
+	}
 	int leftChildIndex = parentIndex*2+1;
 	int rightChildIndex = parentIndex*2+2;
+	if(leftChildIndex>last){
+		// cout<<"left parentIndex="<<parentIndex<<endl;
+		return;
+	}else{
+		if (rightChildIndex > last ){
+			if(v[parentIndex].getFCost()>v[leftChildIndex].getFCost()){
+				swap(v[parentIndex], v[leftChildIndex]);
+			}
+			// cout<<"right parentIndex="<<parentIndex<<endl;
+			return;
+		}
+	}
 	while(v[parentIndex].getFCost()>v[leftChildIndex].getFCost() || v[parentIndex].getFCost()>v[rightChildIndex].getFCost()){
 		if(v[leftChildIndex].getFCost()<v[rightChildIndex].getFCost()){
 			swap(v[parentIndex],v[leftChildIndex]);
@@ -298,11 +318,13 @@ int Heap::Length(){
 
 void Heap::InsertOrReplace(const Puzzle &p){
 	bool isFind = false;
+	
 	for(std::vector<Puzzle>::iterator it=v.begin(); it!=v.end(); ++it){
 		if((*it).getString() == p.getString() && (*it).getFCost()>p.getFCost()){
 			Delete(*it);
 			InsertHeap(p);
 			isFind = true;
+			break;
 		}
 	}
 	if (!isFind){
@@ -311,12 +333,19 @@ void Heap::InsertOrReplace(const Puzzle &p){
 }
 
 int Heap::MaxLength(){
-	return 0;
+	return maxLength;
 }
 
 void Heap::Print(){
-	for(std::vector<Puzzle>::iterator it=v.begin(); it!=v.end(); ++it){
-		cout<<"t="<<t<<" "<<(*it).getString()<<endl;
-	}
+	// for(std::vector<Puzzle>::iterator it=v.begin(); it!=v.end(); ++it){
+	// 	cout<<"t="<<t<<" "<<(*it).getString()<<", hcost="<<(*it).getHCost()<<", fcost="<<(*it).getFCost()<<endl;
+	// }
 	t++;
+	cout<<"t="<<t<<endl;
+	// cout<<"0="<<v[0].getFCost()<< " 1="<<v[1].getFCost()<<" 2="<<v[2].getFCost()<<endl;
+}
+
+void Heap::PrintLast(){
+	cout<<"last="<<last<<endl;
+
 }
