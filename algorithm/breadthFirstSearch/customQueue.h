@@ -68,16 +68,16 @@ private:
 	int t;
 public:
 	Heap();
-	Heap( Puzzle &p);
+	Heap(const Puzzle &p);
 	~Heap();
 
-	void InsertHeap( Puzzle &p);
+	void InsertHeap(const Puzzle &p);
 	Puzzle Root();
 	void DeleteRoot();
-	void Delete( Puzzle &p);
+	void Delete(const Puzzle &p);
 	bool IsEmpty();
 	int Length();
-	void InsertOrReplace( Puzzle &p);
+	void InsertOrReplace(const Puzzle &p);
 	int MaxLength();
 
 	void Print();

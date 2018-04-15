@@ -82,7 +82,7 @@ void Puzzle::updateFCost(){
 	fCost = hCost+pathLength;
 }
 
-int Puzzle::getFCost(){
+int Puzzle::getFCost() const{
 	return fCost;
 }
 

@@ -161,18 +161,20 @@ Heap::Heap(){
 	last = -1;
 }
 
-Heap::Heap(Puzzle &p){
-	v.push_back(p);
+Heap::Heap(const Puzzle &p){
 	last = -1;
+	v.push_back(p);
+	last += 1;
 	t= 0;
 }
 
 Heap::~Heap(){
 	v.clear();
+	last = -1;
 }
 
 
-void Heap::InsertHeap(Puzzle &p){
+void Heap::InsertHeap(const Puzzle &p){
 	v.push_back(p);
 	last += 1;
 	if(last == 0){
@@ -197,7 +199,7 @@ void Heap::InsertHeap(Puzzle &p){
 }
 
 Puzzle Heap::Root(){
-	if(last >0){
+	if(last >=0){
 		return v[0];
 	}
 }
@@ -210,6 +212,11 @@ void Heap::DeleteRoot(){
 	v[0] = v[last];
 	v.pop_back();
 	last -= 1;
+	// There are at least two elements in the Q
+	// Then the Q can be fixed
+	if (last <1){ 
+		return;
+	}
 	int parentIndex = 0;
 	int leftChildIndex = parentIndex*2+1;
 	int rightChildIndex = parentIndex*2+2;
@@ -221,6 +228,7 @@ void Heap::DeleteRoot(){
 			swap(v[parentIndex],v[rightChildIndex]);
 			parentIndex = rightChildIndex;
 		}
+		
 		leftChildIndex = parentIndex*2+1;
 		rightChildIndex = parentIndex*2+2;
 
@@ -237,7 +245,7 @@ void Heap::DeleteRoot(){
 	}
 }
 
-void Heap::Delete(Puzzle &p){
+void Heap::Delete(const Puzzle &p){
 	if (last <0){
 		return;
 	}
@@ -288,7 +296,7 @@ int Heap::Length(){
 	return v.size();
 }
 
-void Heap::InsertOrReplace(Puzzle &p){
+void Heap::InsertOrReplace(const Puzzle &p){
 	bool isFind = false;
 	for(std::vector<Puzzle>::iterator it=v.begin(); it!=v.end(); ++it){
 		if((*it).getString() == p.getString() && (*it).getFCost()>p.getFCost()){

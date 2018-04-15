@@ -397,24 +397,19 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 		Puzzle currentPuzzle = PriorityQ.Root();
 		
 		if(currentPuzzle.goalMatch()){
-			cout<<"1"<<endl;
 			path = currentPuzzle.getPath();
 			expandedList.clear();
 			break;
 		}
-		PriorityQ.Print();
 
 		if(expandedList[currentPuzzle.getString()]){
 			PriorityQ.Print();
 			PriorityQ.DeleteRoot();
 			continue;
 		}	
-		PriorityQ.Print();
 
 		expandedList[currentPuzzle.getString()] = true;
 		PriorityQ.DeleteRoot();
-
-		PriorityQ.Print();
 
 		numOfStateExpansions++;
 		if(currentPuzzle.canMoveUp()){
@@ -427,7 +422,6 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			}
 			delete temPuzzle;
 		}
-PriorityQ.Print();
 		if(currentPuzzle.canMoveRight()){
 			Puzzle *temPuzzle = currentPuzzle.moveRight();
 			if(!expandedList[temPuzzle->getString()]){
@@ -437,7 +431,6 @@ PriorityQ.Print();
 			}
 			delete temPuzzle;
 		}
-PriorityQ.Print();
 		if(currentPuzzle.canMoveDown()){
 			Puzzle *temPuzzle = currentPuzzle.moveDown();
 			if(!expandedList[temPuzzle->getString()]){
@@ -447,7 +440,6 @@ PriorityQ.Print();
 			}
 			delete temPuzzle;
 		}
-PriorityQ.Print();
 		if(currentPuzzle.canMoveLeft()){
 			Puzzle *temPuzzle = currentPuzzle.moveLeft();
 			if(!expandedList[temPuzzle->getString()]){
@@ -461,7 +453,6 @@ PriorityQ.Print();
 			path = currentPuzzle.getPath();
 			break;
 		}
-		PriorityQ.Print();
 	}
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
 	// maxQLength= rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
