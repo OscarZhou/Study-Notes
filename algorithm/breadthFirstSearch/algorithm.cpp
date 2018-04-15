@@ -405,6 +405,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 	
 		if(expandedList[currentPuzzle.getString()]){
 			// PriorityQ.PrintLast();
+			numOfAttemptedNodeReExpansions++;
 			PriorityQ.DeleteRoot();
 			continue;
 		}	
@@ -421,7 +422,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
    				temPuzzle->updateFCost();
-   				PriorityQ.InsertOrReplace(*temPuzzle);
+   				PriorityQ.InsertOrReplace(*temPuzzle, numOfDeletionsFromMiddleOfHeap);
 			}
 			delete temPuzzle;
 		}
@@ -430,7 +431,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
    				temPuzzle->updateFCost();
-   				PriorityQ.InsertOrReplace(*temPuzzle);
+   				PriorityQ.InsertOrReplace(*temPuzzle, numOfDeletionsFromMiddleOfHeap);
 			}
 			delete temPuzzle;
 		}
@@ -439,7 +440,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
    				temPuzzle->updateFCost();
-   				PriorityQ.InsertOrReplace(*temPuzzle);
+   				PriorityQ.InsertOrReplace(*temPuzzle, numOfDeletionsFromMiddleOfHeap);
 			}
 			delete temPuzzle;
 		}
@@ -448,7 +449,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
    				temPuzzle->updateFCost();
-   				PriorityQ.InsertOrReplace(*temPuzzle);
+   				PriorityQ.InsertOrReplace(*temPuzzle, numOfDeletionsFromMiddleOfHeap);
 			}
 			delete temPuzzle;
 		}

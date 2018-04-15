@@ -322,11 +322,12 @@ int Heap::Length(){
 	return v.size();
 }
 
-void Heap::InsertOrReplace(const Puzzle &p){
+void Heap::InsertOrReplace(const Puzzle &p, int &numOfDeletionsFromMiddleOfHeap){
 	bool isFind = false;
 	
 	for(std::vector<Puzzle>::iterator it=v.begin(); it!=v.end(); ++it){
 		if((*it).getString() == p.getString() && (*it).getFCost()>p.getFCost()){
+			numOfDeletionsFromMiddleOfHeap++;
 			Delete(*it);
 			InsertHeap(p);
 			isFind = true;

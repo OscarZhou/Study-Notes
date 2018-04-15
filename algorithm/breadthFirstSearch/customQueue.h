@@ -80,7 +80,7 @@ public:
 	void Delete(const Puzzle &p);
 	bool IsEmpty();
 	int Length();
-	void InsertOrReplace(const Puzzle &p);
+	void InsertOrReplace(const Puzzle &p, int &numOfDeletionsFromMiddleOfHeap);
 	int MaxLength();
 
 	void Print();
