@@ -75,7 +75,7 @@ string breadthFirstSearch(string const initialState, string const goalState, int
 	//srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
 	// maxQLength= rand() % 1500; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
 	// numOfStateExpansions = rand() % 800; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
-
+	maxQLength = Q.MaxLength();
 
 	//***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
@@ -120,6 +120,7 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
 			continue;
 		}	
 		visitedList[currentPuzzle.getString()] = true;
+
 		if(currentPuzzle.goalMatch()){
 			path = currentPuzzle.getPath();
 			visitedList.clear();
@@ -159,7 +160,7 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
 	//maxQLength= rand() % 800; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
 	// numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
-
+	maxQLength = Q.MaxLength();
 
 	
 //***********************************************************************************************************
@@ -251,7 +252,7 @@ string progressiveDeepeningSearch_No_VisitedList(string const initialState, stri
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
 	// maxQLength= rand() % 500; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
 	// numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
-
+	maxQLength = Q.MaxLength();
 	
 	
 //***********************************************************************************************************
@@ -355,7 +356,7 @@ string progressiveDeepeningSearch_with_NonStrict_VisitedList(string const initia
 	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
 	// maxQLength= rand() % 300; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
 	// numOfStateExpansions = rand() % 300; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
-
+	maxQLength = Q.MaxLength();
 	
 	
 //***********************************************************************************************************
@@ -395,6 +396,13 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 		}
 
 		Puzzle currentPuzzle = PriorityQ.Root();
+		
+		if(currentPuzzle.goalMatch()){
+			path = currentPuzzle.getPath();
+			expandedList.clear();
+			break;
+		}
+	
 		if(expandedList[currentPuzzle.getString()]){
 			// PriorityQ.PrintLast();
 			PriorityQ.DeleteRoot();
@@ -403,32 +411,21 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 
 		expandedList[currentPuzzle.getString()] = true;
 		// cout<<"the current string = "<<currentPuzzle.getString()<<", fcost = "<<currentPuzzle.getFCost()<<endl;
-		PriorityQ.Print();
+		// PriorityQ.Print();
+		// PriorityQ.PrintLast();
 	 	
-		if(currentPuzzle.goalMatch()){
-			path = currentPuzzle.getPath();
-			expandedList.clear();
-			break;
-		}
-	
 		PriorityQ.DeleteRoot();
 		numOfStateExpansions++;
 		if(currentPuzzle.canMoveUp()){
 			Puzzle *temPuzzle = currentPuzzle.moveUp();
-			// cout<<"move up string= "<<temPuzzle->getString()<<endl;
 			if(!expandedList[temPuzzle->getString()]){
-
 				temPuzzle->updateHCost(heuristic);
-				
    				temPuzzle->updateFCost();
    				PriorityQ.InsertOrReplace(*temPuzzle);
-
-   				// cout<<"move up fcost = "<<temPuzzle->getFCost()<<endl;
 			}
 			delete temPuzzle;
 		}
 		if(currentPuzzle.canMoveRight()){
-			// cout<<"move right"<<endl;
 			Puzzle *temPuzzle = currentPuzzle.moveRight();
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
@@ -438,7 +435,6 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			delete temPuzzle;
 		}
 		if(currentPuzzle.canMoveDown()){
-			// cout<<"move down"<<endl;
 			Puzzle *temPuzzle = currentPuzzle.moveDown();
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
@@ -448,7 +444,6 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			delete temPuzzle;
 		}
 		if(currentPuzzle.canMoveLeft()){
-			// cout<<"move left"<<endl;
 			Puzzle *temPuzzle = currentPuzzle.moveLeft();
 			if(!expandedList[temPuzzle->getString()]){
 				temPuzzle->updateHCost(heuristic);
@@ -457,7 +452,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			}
 			delete temPuzzle;
 		}
-		if (PriorityQ.MaxLength() > 5000000){
+		if (PriorityQ.MaxLength() > 500000){
 			path = currentPuzzle.getPath();
 			break;
 		}
@@ -467,7 +462,7 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 	// numOfStateExpansions = rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 
 
-	
+	maxQLength = PriorityQ.MaxLength();
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);

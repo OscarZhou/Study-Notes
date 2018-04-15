@@ -6,7 +6,7 @@ using namespace std;
 /// Queue for BFS
 Queue::Queue(){
 	head = tail = NULL;
-	maxLength = 0;
+	currentLength = maxLength = 0;
 }
 
 Queue::Queue(const Puzzle &p){
@@ -15,7 +15,7 @@ Queue::Queue(const Puzzle &p){
 	b->next = NULL;
 	head = b;
 	tail = b;
-	maxLength = 0;
+	currentLength = maxLength = 1;
 }
 
 Queue::~Queue(){
@@ -37,7 +37,10 @@ void Queue::Enqueue(const Puzzle &p){
 		tail->next = b;
 		tail = b;		
 	}
-	maxLength++;
+	currentLength++;
+	if (currentLength>maxLength){
+		maxLength = currentLength;
+	}
 }
 
 Puzzle Queue::Peek(){
@@ -54,7 +57,7 @@ void Queue::Dequeue(){
 		head = head->next;	
 	}
 	delete b;
-	maxLength--;
+	currentLength--;
 }
 
 bool Queue::IsEmpty(){
@@ -86,7 +89,7 @@ int Queue::MaxLength(){
 
 Stack::Stack(){
 	top = NULL;
-	maxLength = 0;
+	currentLength = maxLength = 0;
 }
 
 Stack::Stack(const Puzzle &p){
@@ -95,7 +98,7 @@ Stack::Stack(const Puzzle &p){
 	b->next = NULL;
 
 	top = b;
-	maxLength = 0;
+	currentLength = maxLength = 0;
 }
 
 Stack::~Stack(){
@@ -112,7 +115,10 @@ void Stack::Push(const Puzzle &p){
 
 	b->next = top;
 	top = b;
-	maxLength++;
+	currentLength++;
+	if(currentLength>maxLength){
+		maxLength = currentLength;
+	}
 }
 
 Puzzle Stack::Top(){
@@ -127,7 +133,7 @@ void Stack::Pop(){
 		top = top->next;
 	}
 	delete b;
-	maxLength--;
+	currentLength--;
 }
 
 bool Stack::IsEmpty(){

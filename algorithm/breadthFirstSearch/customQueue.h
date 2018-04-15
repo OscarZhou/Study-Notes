@@ -18,6 +18,7 @@ private:
 	Board* head;
 	Board* tail;
 	int maxLength;
+	int currentLength;
 public:
 	Queue();
 	Queue(const Puzzle &p);
@@ -40,6 +41,7 @@ class Stack
 private:
 	Board* top;
 	int maxLength;
+	int currentLength;
 public:
 	Stack();
 	Stack(const Puzzle &p);
