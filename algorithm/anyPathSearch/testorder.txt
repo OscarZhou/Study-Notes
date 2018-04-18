@@ -1,0 +1,15 @@
+mingw32-make
+
+
+
+.\Main.exe single_run breadth_first_search 471506238 123804765
+
+.\Main.exe single_run breadth_first_search 042158367 123804765
+.\Main.exe single_run breadth_first_search 364058271 123804765
+.\Main.exe single_run breadth_first_search 281463075 123804765
+.\Main.exe single_run breadth_first_search 567408321 123804765
+.\Main.exe single_run breadth_first_search 463508721 123804765
+.\Main.exe single_run breadth_first_search 471506238 123804765
+
+
+
