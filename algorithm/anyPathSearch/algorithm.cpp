@@ -66,20 +66,12 @@ string breadthFirstSearch(string const initialState, string const goalState, int
 			Q.Enqueue(*temPuzzle);
 			delete temPuzzle;
 		}
-		if (Q.MaxLength() > 5000000){
-			path = currentPuzzle.getPath();
-			break;
-		}
 	}
 	
-	//srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	// maxQLength= rand() % 1500; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	// numOfStateExpansions = rand() % 800; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 	maxQLength = Q.MaxLength();
 
 	//***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	//path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
 	
 	return path;		
 		
@@ -152,20 +144,12 @@ string breadthFirstSearch_with_VisitedList(string const initialState, string con
 			Q.Enqueue(*temPuzzle);
 			delete temPuzzle;
 		}
-		if (Q.MaxLength() > 5000000){
-			path = currentPuzzle.getPath();
-			break;
-		}
 	}
-	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	//maxQLength= rand() % 800; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	// numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 	maxQLength = Q.MaxLength();
 
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	//path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
 	return path;		
 		
 }
@@ -239,25 +223,16 @@ string progressiveDeepeningSearch_No_VisitedList(string const initialState, stri
 				delete temPuzzle;
 			}
 
-			if (Q.MaxLength() > 5000000){
-				path = currentPuzzle.getPath();
-				break;
-			}
 		}else{
 			break;
 		}
 	}
 
-
-	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	// maxQLength= rand() % 500; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	// numOfStateExpansions = rand() % 600; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 	maxQLength = Q.MaxLength();
 	
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	//path = "DDRRLLLUUU";  //this is just a dummy path for testing the function           
 	return path;		
 		
 }
@@ -344,25 +319,15 @@ string progressiveDeepeningSearch_with_NonStrict_VisitedList(string const initia
 				delete temPuzzle;
 			}
 
-			if (Q.MaxLength() > 5000000){
-				path = currentPuzzle.getPath();
-				break;
-			}
 		}else{
 			break;
 		}
 	}
-
-	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	// maxQLength= rand() % 300; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	// numOfStateExpansions = rand() % 300; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
 	maxQLength = Q.MaxLength();
 	
 	
 //***********************************************************************************************************
     actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	// path = "DDRRLLLUUU"; //this is just a dummy path for testing the function
-	
 	return path;		
 		
 }
@@ -404,16 +369,12 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 		}
 	
 		if(expandedList[currentPuzzle.getString()]){
-			// PriorityQ.PrintLast();
 			numOfAttemptedNodeReExpansions++;
 			PriorityQ.DeleteRoot();
 			continue;
 		}	
 
 		expandedList[currentPuzzle.getString()] = true;
-		// cout<<"the current string = "<<currentPuzzle.getString()<<", fcost = "<<currentPuzzle.getFCost()<<endl;
-		// PriorityQ.Print();
-		// PriorityQ.PrintLast();
 	 	
 		PriorityQ.DeleteRoot();
 		numOfStateExpansions++;
@@ -453,21 +414,12 @@ string aStar_ExpandedList(string const initialState, string const goalState, int
 			}
 			delete temPuzzle;
 		}
-		if (PriorityQ.MaxLength() > 500000){
-			path = currentPuzzle.getPath();
-			break;
-		}
 	}
-	srand(time(NULL)); //RANDOM NUMBER GENERATOR - ONLY FOR THIS DEMO.  YOU REALLY DON'T NEED THIS! DISABLE THIS STATEMENT.
-	// maxQLength= rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY.
-	// numOfStateExpansions = rand() % 200; //AT THE MOMENT, THIS IS JUST GENERATING SOME DUMMY VALUE.  YOUR ALGORITHM IMPLEMENTATION SHOULD COMPUTE THIS PROPERLY
-
 
 	maxQLength = PriorityQ.MaxLength();
 	
 //***********************************************************************************************************
 	actualRunningTime = ((float)(clock() - startTime)/CLOCKS_PER_SEC);
-	// path = "DDRRLLLUUU"; //this is just a dummy path for testing the function
 	            
 	return path;		
 		

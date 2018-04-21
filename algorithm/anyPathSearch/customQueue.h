@@ -4,9 +4,9 @@
 
 using namespace std;
 
-struct Board {
+struct Node {
 	Puzzle* puzzle;
-	Board* next;
+	Node* next;
 };
 
 
@@ -15,8 +15,8 @@ struct Board {
 class Queue
 {
 private:
-	Board* head;
-	Board* tail;
+	Node* head;
+	Node* tail;
 	int maxLength;
 	int currentLength;
 public:
@@ -30,7 +30,7 @@ public:
 	bool IsEmpty();
 	int Length();
 	int MaxLength();
-	void Print();
+	
 };
 
 
@@ -39,7 +39,7 @@ public:
 class Stack
 {
 private:
-	Board* top;
+	Node* top;
 	int maxLength;
 	int currentLength;
 public:
@@ -53,7 +53,7 @@ public:
 	bool IsEmpty();
 	int Length();
 	int MaxLength();
-	void Print();
+	
 };
 
 
@@ -83,6 +83,4 @@ public:
 	void InsertOrReplace(const Puzzle &p, int &numOfDeletionsFromMiddleOfHeap);
 	int MaxLength();
 
-	void Print();
-	void PrintLast();
 };

@@ -10,7 +10,7 @@ Queue::Queue(){
 }
 
 Queue::Queue(const Puzzle &p){
-	Board *b = new Board();
+	Node *b = new Node();
 	b->puzzle = new Puzzle(p);
 	b->next = NULL;
 	head = b;
@@ -21,12 +21,13 @@ Queue::Queue(const Puzzle &p){
 Queue::~Queue(){
 	if(!IsEmpty()){
 		delete head;
+		delete tail;
 		head = tail = NULL;	
 	}
 }
 
 void Queue::Enqueue(const Puzzle &p){
-	Board *b = new Board();
+	Node *b = new Node();
 	b->puzzle = new Puzzle(p);
 	b->next = NULL;
 
@@ -50,7 +51,7 @@ Puzzle Queue::Peek(){
 }
 
 void Queue::Dequeue(){
-	Board *b = head;
+	Node *b = head;
 	if(head == tail){
 		head = tail = NULL;
 	}else{
@@ -68,7 +69,7 @@ bool Queue::IsEmpty(){
 }
 
 int Queue::Length(){
-	Board *b = head;
+	Node *b = head;
 	int length = 0;
 	if (b != NULL){
 		length = 1;
@@ -93,7 +94,7 @@ Stack::Stack(){
 }
 
 Stack::Stack(const Puzzle &p){
-	Board *b = new Board();
+	Node *b = new Node();
 	b->puzzle = new Puzzle(p);
 	b->next = NULL;
 
@@ -109,7 +110,7 @@ Stack::~Stack(){
 }
 
 void Stack::Push(const Puzzle &p){
-	Board *b = new Board();
+	Node *b = new Node();
 	b->puzzle = new Puzzle(p);
 	b->next = NULL;
 
@@ -128,7 +129,7 @@ Puzzle Stack::Top(){
 }
 
 void Stack::Pop(){
-	Board *b = top;
+	Node *b = top;
 	if (!IsEmpty()){
 		top = top->next;
 	}
@@ -144,7 +145,7 @@ bool Stack::IsEmpty(){
 }
 
 int Stack::Length(){
-	Board *b = top;
+	Node *b = top;
 	int length = 0;
 	if (b != NULL){
 		length = 1;
@@ -279,14 +280,12 @@ void Heap::Delete(const Puzzle &p){
 	int leftChildIndex = parentIndex*2+1;
 	int rightChildIndex = parentIndex*2+2;
 	if(leftChildIndex>last){
-		// cout<<"left parentIndex="<<parentIndex<<endl;
 		return;
 	}else{
 		if (rightChildIndex > last ){
 			if(v[parentIndex].getFCost()>v[leftChildIndex].getFCost()){
 				swap(v[parentIndex], v[leftChildIndex]);
 			}
-			// cout<<"right parentIndex="<<parentIndex<<endl;
 			return;
 		}
 	}
@@ -343,16 +342,3 @@ int Heap::MaxLength(){
 	return maxLength;
 }
 
-void Heap::Print(){
-	// for(std::vector<Puzzle>::iterator it=v.begin(); it!=v.end(); ++it){
-	// 	cout<<"t="<<t<<" "<<(*it).getString()<<", hcost="<<(*it).getHCost()<<", fcost="<<(*it).getFCost()<<endl;
-	// }
-	t++;
-	cout<<"t="<<t<<endl;
-	// cout<<"0="<<v[0].getFCost()<< " 1="<<v[1].getFCost()<<" 2="<<v[2].getFCost()<<endl;
-}
-
-void Heap::PrintLast(){
-	cout<<"last="<<last<<endl;
-
-}
