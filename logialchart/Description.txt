@@ -1,0 +1,11 @@
+LogicalChart - Auth0+RDS+LocalServer:
+
+
+The database is on the cloud 
+
+The API service is in the local environment, which means that it is not accessable to public
+
+User data is stored in the custom database instead of storing in Auth0
+
+
+
