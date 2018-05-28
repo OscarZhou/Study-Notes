@@ -32,20 +32,21 @@ func ParseJWKS(jwksURL, signingKey string) (string, error) {
 		return "", fmt.Errorf("%s, %s", r.Status, err.Error())
 	}
 
-	publicKey := "-----BEGIN CERTIFICATE-----\n"
+	publicKey := "-----BEGIN CERTIFICATE-----\r\n"
 	for _, jwk := range jwks["keys"] {
 		if jwk["alg"] == signingKey {
 			v := reflect.ValueOf(jwk["x5c"])
-			if v.IsValid() && v.Kind() == reflect.Slice {
-				certificate, ok := v.Index(0).Interface().(string)
-				if ok {
-					publicKey += certificate
-				}
+			if !v.IsValid() || v.Kind() != reflect.Slice {
+				return "", errors.New("x5c is not valid or the type is not slice")
+			}
+			certificate, ok := v.Index(0).Interface().(string)
+			if ok {
+				publicKey += certificate
 			}
 			break
 		}
 	}
 
-	publicKey += "\n-----END CERTIFICATE-----"
+	publicKey += "\r\n-----END CERTIFICATE-----\r\n"
 	return publicKey, nil
 }
