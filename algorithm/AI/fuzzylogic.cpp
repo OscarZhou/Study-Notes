@@ -25,7 +25,128 @@ void initFuzzyRules(fuzzy_system_rec *fl) {
    //sample only
    // fl->rules[0].inp_fuzzy_set[0] = in_nl;
    // fl->rules[0].inp_fuzzy_set[1] = in_nl;
-   
+   // fl->rules[0].out_fuzzy_set = out_nvl;
+
+   //add
+   fl->rules[0].inp_fuzzy_set[0] = in_nl;
+   fl->rules[0].inp_fuzzy_set[1] = in_nl;
+   fl->rules[0].out_fuzzy_set = out_nvl;
+
+   fl->rules[1].inp_fuzzy_set[0] = in_ns;
+   fl->rules[1].inp_fuzzy_set[1] = in_nl;
+   fl->rules[1].out_fuzzy_set = out_nl;
+
+   fl->rules[2].inp_fuzzy_set[0] = in_ze;
+   fl->rules[2].inp_fuzzy_set[1] = in_nl;
+   fl->rules[2].out_fuzzy_set = out_nm;
+
+   fl->rules[3].inp_fuzzy_set[0] = in_ps;
+   fl->rules[3].inp_fuzzy_set[1] = in_nl;
+   fl->rules[3].out_fuzzy_set = out_ns;
+
+   fl->rules[4].inp_fuzzy_set[0] = in_pl;
+   fl->rules[4].inp_fuzzy_set[1] = in_nl;
+   fl->rules[4].out_fuzzy_set = out_ze;
+
+   fl->rules[5].inp_fuzzy_set[0] = in_nl;
+   fl->rules[5].inp_fuzzy_set[1] = in_ns;
+   fl->rules[5].out_fuzzy_set = out_nl;
+
+
+   fl->rules[6].inp_fuzzy_set[0] = in_ns;
+   fl->rules[6].inp_fuzzy_set[1] = in_ns;
+   fl->rules[6].out_fuzzy_set = out_nm;
+
+
+   fl->rules[7].inp_fuzzy_set[0] = in_ze;
+   fl->rules[7].inp_fuzzy_set[1] = in_ns;
+   fl->rules[7].out_fuzzy_set = out_ns;
+
+
+   fl->rules[8].inp_fuzzy_set[0] = in_ps;
+   fl->rules[8].inp_fuzzy_set[1] = in_ns;
+   fl->rules[8].out_fuzzy_set = out_ze;
+
+
+   fl->rules[9].inp_fuzzy_set[0] = in_pl;
+   fl->rules[9].inp_fuzzy_set[1] = in_ns;
+   fl->rules[9].out_fuzzy_set = out_ps;
+
+
+   fl->rules[10].inp_fuzzy_set[0] = in_nl;
+   fl->rules[10].inp_fuzzy_set[1] = in_ze;
+   fl->rules[10].out_fuzzy_set = out_nm;
+
+
+   fl->rules[11].inp_fuzzy_set[0] = in_ns;
+   fl->rules[11].inp_fuzzy_set[1] = in_ze;
+   fl->rules[11].out_fuzzy_set = out_ns;
+
+
+   fl->rules[12].inp_fuzzy_set[0] = in_ze;
+   fl->rules[12].inp_fuzzy_set[1] = in_ze;
+   fl->rules[12].out_fuzzy_set = out_ze;
+
+
+   fl->rules[13].inp_fuzzy_set[0] = in_ps;
+   fl->rules[13].inp_fuzzy_set[1] = in_ze;
+   fl->rules[13].out_fuzzy_set = out_ps;
+
+
+   fl->rules[14].inp_fuzzy_set[0] = in_pl;
+   fl->rules[14].inp_fuzzy_set[1] = in_ze;
+   fl->rules[14].out_fuzzy_set = out_pm;
+
+
+   fl->rules[15].inp_fuzzy_set[0] = in_nl;
+   fl->rules[15].inp_fuzzy_set[1] = in_ps;
+   fl->rules[15].out_fuzzy_set = out_ns;
+
+
+   fl->rules[16].inp_fuzzy_set[0] = in_ns;
+   fl->rules[16].inp_fuzzy_set[1] = in_ps;
+   fl->rules[16].out_fuzzy_set = out_ze;
+
+
+   fl->rules[17].inp_fuzzy_set[0] = in_ze;
+   fl->rules[17].inp_fuzzy_set[1] = in_ps;
+   fl->rules[17].out_fuzzy_set = out_ps;
+
+
+   fl->rules[18].inp_fuzzy_set[0] = in_ps;
+   fl->rules[18].inp_fuzzy_set[1] = in_ps;
+   fl->rules[18].out_fuzzy_set = out_pm;
+
+
+   fl->rules[19].inp_fuzzy_set[0] = in_pl;
+   fl->rules[19].inp_fuzzy_set[1] = in_ps;
+   fl->rules[19].out_fuzzy_set = out_pl;
+
+
+   fl->rules[20].inp_fuzzy_set[0] = in_nl;
+   fl->rules[20].inp_fuzzy_set[1] = in_pl;
+   fl->rules[20].out_fuzzy_set = out_ze;
+
+
+   fl->rules[21].inp_fuzzy_set[0] = in_ns;
+   fl->rules[21].inp_fuzzy_set[1] = in_pl;
+   fl->rules[21].out_fuzzy_set = out_ps;
+
+
+   fl->rules[22].inp_fuzzy_set[0] = in_ze;
+   fl->rules[22].inp_fuzzy_set[1] = in_pl;
+   fl->rules[22].out_fuzzy_set = out_pm;
+
+
+   fl->rules[23].inp_fuzzy_set[0] = in_ps;
+   fl->rules[23].inp_fuzzy_set[1] = in_pl;
+   fl->rules[23].out_fuzzy_set = out_pl;
+
+
+   fl->rules[24].inp_fuzzy_set[0] = in_pl;
+   fl->rules[24].inp_fuzzy_set[1] = in_pl;
+   fl->rules[24].out_fuzzy_set = out_pvl;
+
 	
 	
 //----------------------------------------------------------------------------   
@@ -40,8 +161,131 @@ void initFuzzyRules(fuzzy_system_rec *fl) {
    //sample only
    // fl->rules[25+0].inp_fuzzy_set[0] = in_nl;
    // fl->rules[25+0].inp_fuzzy_set[1] = in_nl;
+
+   fl->rules[25+0].inp_fuzzy_set[0] = in_nl;
+   fl->rules[25+0].inp_fuzzy_set[1] = in_nl;
+   fl->rules[25+0].out_fuzzy_set = out_pvl;
    
-   //and so on, and so forth...
+   fl->rules[25+1].inp_fuzzy_set[0] = in_ns;
+   fl->rules[25+1].inp_fuzzy_set[1] = in_nl;
+   fl->rules[25+1].out_fuzzy_set = out_pl;
+
+
+   fl->rules[25+2].inp_fuzzy_set[0] = in_ze;
+   fl->rules[25+2].inp_fuzzy_set[1] = in_nl;
+   fl->rules[25+2].out_fuzzy_set = out_pm;
+
+
+   fl->rules[25+3].inp_fuzzy_set[0] = in_ps;
+   fl->rules[25+3].inp_fuzzy_set[1] = in_nl;
+   fl->rules[25+3].out_fuzzy_set = out_ps;
+
+
+   fl->rules[25+4].inp_fuzzy_set[0] = in_pl;
+   fl->rules[25+4].inp_fuzzy_set[1] = in_nl;
+   fl->rules[25+4].out_fuzzy_set = out_ze;
+
+
+   fl->rules[25+5].inp_fuzzy_set[0] = in_nl;
+   fl->rules[25+5].inp_fuzzy_set[1] = in_ns;
+   fl->rules[25+5].out_fuzzy_set = out_pl;
+
+
+   fl->rules[25+6].inp_fuzzy_set[0] = in_ns;
+   fl->rules[25+6].inp_fuzzy_set[1] = in_ns;
+   fl->rules[25+6].out_fuzzy_set = out_pm;
+
+
+   fl->rules[25+7].inp_fuzzy_set[0] = in_ze;
+   fl->rules[25+7].inp_fuzzy_set[1] = in_ns;
+   fl->rules[25+7].out_fuzzy_set = out_ps;
+
+
+   fl->rules[25+8].inp_fuzzy_set[0] = in_ps;
+   fl->rules[25+8].inp_fuzzy_set[1] = in_ns;
+   fl->rules[25+8].out_fuzzy_set = out_ze;
+
+
+   fl->rules[25+9].inp_fuzzy_set[0] = in_pl;
+   fl->rules[25+9].inp_fuzzy_set[1] = in_ns;
+   fl->rules[25+9].out_fuzzy_set = out_ns;
+
+
+   fl->rules[25+10].inp_fuzzy_set[0] = in_nl;
+   fl->rules[25+10].inp_fuzzy_set[1] = in_ze;
+   fl->rules[25+10].out_fuzzy_set = out_pm;
+
+
+   fl->rules[25+11].inp_fuzzy_set[0] = in_ns;
+   fl->rules[25+11].inp_fuzzy_set[1] = in_ze;
+   fl->rules[25+11].out_fuzzy_set = out_ps;
+
+
+   fl->rules[25+12].inp_fuzzy_set[0] = in_ze;
+   fl->rules[25+12].inp_fuzzy_set[1] = in_ze;
+   fl->rules[25+12].out_fuzzy_set = out_ze;
+
+
+   fl->rules[25+13].inp_fuzzy_set[0] = in_ps;
+   fl->rules[25+13].inp_fuzzy_set[1] = in_ze;
+   fl->rules[25+13].out_fuzzy_set = out_ns;
+
+
+   fl->rules[25+14].inp_fuzzy_set[0] = in_pl;
+   fl->rules[25+14].inp_fuzzy_set[1] = in_ze;
+   fl->rules[25+14].out_fuzzy_set = out_nm;
+
+
+   fl->rules[25+15].inp_fuzzy_set[0] = in_nl;
+   fl->rules[25+15].inp_fuzzy_set[1] = in_ps;
+   fl->rules[25+15].out_fuzzy_set = out_ps;
+
+
+   fl->rules[25+16].inp_fuzzy_set[0] = in_ns;
+   fl->rules[25+16].inp_fuzzy_set[1] = in_ps;
+   fl->rules[25+16].out_fuzzy_set = out_ze;
+
+
+   fl->rules[25+17].inp_fuzzy_set[0] = in_ze;
+   fl->rules[25+17].inp_fuzzy_set[1] = in_ps;
+   fl->rules[25+17].out_fuzzy_set = out_ns;
+
+
+   fl->rules[25+18].inp_fuzzy_set[0] = in_ps;
+   fl->rules[25+18].inp_fuzzy_set[1] = in_ps;
+   fl->rules[25+18].out_fuzzy_set = out_nm;
+
+
+   fl->rules[25+19].inp_fuzzy_set[0] = in_pl;
+   fl->rules[25+19].inp_fuzzy_set[1] = in_ps;
+   fl->rules[25+19].out_fuzzy_set = out_nl;
+
+
+   fl->rules[25+20].inp_fuzzy_set[0] = in_nl;
+   fl->rules[25+20].inp_fuzzy_set[1] = in_pl;
+   fl->rules[25+20].out_fuzzy_set = out_ze;
+
+
+   fl->rules[25+21].inp_fuzzy_set[0] = in_ns;
+   fl->rules[25+21].inp_fuzzy_set[1] = in_pl;
+   fl->rules[25+21].out_fuzzy_set = out_ns;
+
+
+   fl->rules[25+22].inp_fuzzy_set[0] = in_ze;
+   fl->rules[25+22].inp_fuzzy_set[1] = in_pl;
+   fl->rules[25+22].out_fuzzy_set = out_nm;
+
+   fl->rules[25+23].inp_fuzzy_set[0] = in_ps;
+   fl->rules[25+23].inp_fuzzy_set[1] = in_pl;
+   fl->rules[25+23].out_fuzzy_set = out_nl;
+
+
+   fl->rules[25+24].inp_fuzzy_set[0] = in_pl;
+   fl->rules[25+24].inp_fuzzy_set[1] = in_pl;
+   fl->rules[25+24].out_fuzzy_set = out_nvl;
+   
+   
+
 
    // fl->rules[25+24].out_fuzzy_set = out_nl;
       return;
@@ -56,19 +300,40 @@ void initMembershipFunctions(fuzzy_system_rec *fl) {
   	//~ fl->inp_mem_fns[in_x][in_neg] = init_trapz (-1.5,-0.5,0,0,left_trapezoid);
    //~ fl->inp_mem_fns[in_x][in_ze] = init_trapz (-1.5,-0.5,0.5,1.5,regular_trapezoid);
    //~ fl->inp_mem_fns[in_x][in_pos] = init_trapz (0.5,1.5,0,0,right_trapezoid);
+
+   fl->inp_mem_fns[in_x][in_nl] = init_trapz (0,0,-2.4,-1.8,left_trapezoid);
+   fl->inp_mem_fns[in_x][in_ns] = init_trapz (-2.4,-1.8,-1.0,-0.4,regular_trapezoid);
+   fl->inp_mem_fns[in_x][in_ze] = init_trapz (-1.0,-0.4,0.4,1.0,regular_trapezoid);
+   fl->inp_mem_fns[in_x][in_ps] = init_trapz (0.4,1.0,1.8,2.4,regular_trapezoid);
+   fl->inp_mem_fns[in_x][in_pl] = init_trapz (1.8,2.4,0,0,right_trapezoid);
 	
    /* The X dot membership functions */
    //enter the appropriate membership function initialisations here 
 
+   fl->inp_mem_fns[in_x_dot][in_nl] = init_trapz (0,0,-4.5,-3.5,left_trapezoid);
+   fl->inp_mem_fns[in_x_dot][in_ns] = init_trapz (-4.5,-3.5,-2,-1,regular_trapezoid);
+   fl->inp_mem_fns[in_x_dot][in_ze] = init_trapz (-2,-1,1,2,regular_trapezoid);
+   fl->inp_mem_fns[in_x_dot][in_ps] = init_trapz (1,2,3.5,4.5,regular_trapezoid);
+   fl->inp_mem_fns[in_x_dot][in_pl] = init_trapz (3.5,4.5,0,0,right_trapezoid);
+
    /* The theta membership functions */
    //enter the appropriate membership function initialisations here
+
+   fl->inp_mem_fns[in_theta][in_nl] = init_trapz (0,0,-0.8,-0.7,left_trapezoid);
+   fl->inp_mem_fns[in_theta][in_ns] = init_trapz (-0.8,-0.7,-0.4,-0.3,regular_trapezoid);
+   fl->inp_mem_fns[in_theta][in_ze] = init_trapz (-0.4,-0.1,0.1,0.4,regular_trapezoid);
+   fl->inp_mem_fns[in_theta][in_ps] = init_trapz (0.3,0.4,0.7,0.8,regular_trapezoid);
+   fl->inp_mem_fns[in_theta][in_pl] = init_trapz (0.7,0.8,0,0,right_trapezoid);
   	
    /* The theta dot membership functions */
    //enter the appropriate membership function initialisations here
-  	
 
-	
-	
+   fl->inp_mem_fns[in_theta_dot][in_nl] = init_trapz (0,0,-0.4,-0.3,left_trapezoid);
+   fl->inp_mem_fns[in_theta_dot][in_ns] = init_trapz (-0.4,-0.3,-0.1,0,regular_trapezoid);
+   fl->inp_mem_fns[in_theta_dot][in_ze] = init_trapz (-0.1,-0.05,0.05,0.1,regular_trapezoid);
+   fl->inp_mem_fns[in_theta_dot][in_ps] = init_trapz (0,0.1,0.3,0.4,regular_trapezoid);
+   fl->inp_mem_fns[in_theta_dot][in_pl] = init_trapz (0.3,0.4,0,0,right_trapezoid);
+  	
    return;
 }
 
@@ -84,6 +349,17 @@ void initFuzzySystem (fuzzy_system_rec *fl) {
 	//Sample only
 	// fl->output_values [out_nvl]=-95.0;
 	// fl->output_values [out_nl] = -85.0;
+
+   //add
+   fl->output_values [out_nvl]=-105.0;
+   fl->output_values [out_nl] = -95.0;
+   fl->output_values [out_nm] = -85.0;
+   fl->output_values [out_ns] = -75.0;
+   fl->output_values [out_ze] = 0.0;
+   fl->output_values [out_ps] = 75.0;
+   fl->output_values [out_pm] = 85.0;
+   fl->output_values [out_pl] = 95.0;
+   fl->output_values [out_pvl] = 105.0;
    
 
    fl->rules = (rule *) malloc ((size_t)(fl->no_of_rules*sizeof(rule)));
@@ -110,7 +386,8 @@ trapezoid init_trapz (float x1,float x2,float x3,float x4, trapz_type typ) {
          	 break;
 	 
       case left_trapezoid:
-         	 trz.r_slope = 1.0/(trz.a - trz.b);
+      //add
+         	 trz.r_slope = 1.0/(trz.c - trz.d);
          	 trz.l_slope = 0.0;
          	 break;
 	 
@@ -186,10 +463,10 @@ float fuzzy_system (float inputs[],fuzzy_system_rec fz) {
    
    for (i = 0;i < fz.no_of_rules;i++) {
       for (j = 0;j < fz.no_of_inputs;j++) {
-	   variable_index = fz.rules[i].inp_index[j];
-	   fuzzy_set = fz.rules[i].inp_fuzzy_set[j];
-	   m_values[j] = trapz(inputs[variable_index],
-	       fz.inp_mem_fns[variable_index][fuzzy_set]);
+      	   variable_index = fz.rules[i].inp_index[j];
+      	   fuzzy_set = fz.rules[i].inp_fuzzy_set[j];
+      	   m_values[j] = trapz(inputs[variable_index],
+	         fz.inp_mem_fns[variable_index][fuzzy_set]);
 	   } /* end j  */
       
        weight = min_of (m_values,fz.no_of_inputs);

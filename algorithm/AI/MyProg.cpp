@@ -281,7 +281,7 @@ void runInvertedPendulum(){
 		
          //1) Enable this only after your fuzzy system has been completed already.
          //Remember, you need to define the rules, membership function parameters and rule outputs.
-         //prevState.F = fuzzy_system(inputs, g_fuzzy_system); //call the fuzzy controller
+         prevState.F = fuzzy_system(inputs, g_fuzzy_system); //call the fuzzy controller
 		 
 		 externalForce=0.0;
 		 externalForce = getKey(); //manual operation
@@ -341,7 +341,7 @@ void runInvertedPendulum(){
    }	
 	
     //2) Enable this only after your fuzzy system has been completed already.
-	//free_fuzzy_rules(&g_fuzzy_system);
+	free_fuzzy_rules(&g_fuzzy_system);
 }
 
 
@@ -535,7 +535,8 @@ int main(void) {
 	
    int graphDriver = 0,graphMode = 0;
    
-   initgraph(&graphDriver, &graphMode, "", 1280, 1024); // Start Window
+   // initgraph(&graphDriver, &graphMode, "", 1280, 1024); // Start Window
+   initgraph(&graphDriver, &graphMode, "", 800, 600); // Start Window
    clearDataSet();
    try{
 		runInvertedPendulum();

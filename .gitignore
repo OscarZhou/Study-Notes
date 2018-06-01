@@ -12,3 +12,4 @@ algorithm/breadthFirstSearch/puzzle.h
 algorithm/breadthFirstSearch/algorithm.o
 *.o
 algorithm/breadthFirstSearch/testorder.txt
+algorithm/AI/MyProg.exe
