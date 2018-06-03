@@ -259,14 +259,19 @@ void runInvertedPendulum(){
 	//---------------------------------------------------------------
     //***************************************************************
     //Set the initial angle of the pole with respect to the vertical
-	prevState.angle = 8.0 * (3.14/180);  //initial angle  = 8 degrees
+	prevState.angle = -15.0 * (3.14/180);  //initial angle  = 8 degrees
+	prevState.x = -1.3;
 
 	
     initFuzzySystem(&g_fuzzy_system);	
 	
 	//~ display_All_MF (g_fuzzy_system);
     //~ getch();
-		
+	
+	clock_t  startTime, elapsedTime;
+	startTime = clock();
+	bool found = true;
+
 	while((GetAsyncKeyState(VK_ESCAPE)) == 0 ) {
 		
          setactivepage(page);
@@ -278,7 +283,16 @@ void runInvertedPendulum(){
 		 inputs[in_theta_dot] = prevState.angle_dot;
 		 inputs[in_x] = prevState.x;
 		 inputs[in_x_dot] = prevState.x_dot;
-		
+
+
+		 float limit = 0.02;
+
+		 if (abs(inputs[in_theta]) <= limit && abs(inputs[in_theta_dot]) <= limit && abs(inputs[in_x])<= limit && abs(inputs[in_x_dot]) <= limit && found){
+		 	elapsedTime = (clock() - startTime) / 1.0;
+		 	cout<< "Balancing time = " << elapsedTime<<endl;
+		 	found = false;
+		 }
+
          //1) Enable this only after your fuzzy system has been completed already.
          //Remember, you need to define the rules, membership function parameters and rule outputs.
          prevState.F = fuzzy_system(inputs, g_fuzzy_system); //call the fuzzy controller
@@ -338,6 +352,8 @@ void runInvertedPendulum(){
          if(mousedown()){
          	//do nothing
          }
+
+
    }	
 	
     //2) Enable this only after your fuzzy system has been completed already.

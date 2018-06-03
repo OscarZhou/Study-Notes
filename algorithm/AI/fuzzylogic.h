@@ -23,17 +23,34 @@ using namespace std;
 
 #define TOO_SMALL 1e-6
 
+#define A 3
+#define B 1
+#define C 4
+#define D 2
+
+#define X_MAX 2.4
+#define X_MIN -2.4
+#define X_DOT_MAX 4.5
+#define X_DOT_MIN -4.5
+#define THETA_MAX 0.8
+#define THETA_MIN -0.8
+#define THETA_DOT_MAX 0.4
+#define THETA_DOT_MIN -0.4
+
 //Trapezoidal membership function types
 typedef enum {regular_trapezoid, left_trapezoid, right_trapezoid} trapz_type;
 
 //Input parameters
 enum {in_theta,in_theta_dot,in_x,in_x_dot};
+enum {in_yama_x, in_yama_y};
 
 //Fuzzy sets
-enum {in_nl,in_ns,in_ze,in_ps, in_pl};
+// enum {in_nl,in_ns,in_ze,in_ps, in_pl};
+enum {in_nm, in_ns, in_zr, in_ps, in_pm};
 
 //Fuzzy output terms
-enum {out_nvl,out_nl,out_nm, out_ns, out_ze,out_ps, out_pm,out_pl, out_pvl};
+// enum {out_nvl,out_nl,out_nm, out_ns, out_ze,out_ps, out_pm,out_pl, out_pvl};
+enum {out_nl, out_nm, out_ns, out_zr, out_ps, out_pm, out_pl};
 
 
 typedef struct {
