@@ -11,12 +11,14 @@ import (
 	"os"
 )
 
+// Deprecate
 func GenerateKeys() error {
 	reader := rand.Reader
 	bitSize := 2048
 
 	key, err := rsa.GenerateKey(reader, bitSize)
 	checkError(err)
+
 	publicKey := key.PublicKey
 
 	saveGobKey("private.key", key)
@@ -24,6 +26,7 @@ func GenerateKeys() error {
 
 	saveGobKey("public.key", publicKey)
 	savePublicPEMKey("public.pem", publicKey)
+
 	return nil
 }
 
@@ -45,6 +48,7 @@ func savePEMKey(fileName string, key *rsa.PrivateKey) {
 	var privateKey = &pem.Block{
 		Type:  "PRIVATE KEY",
 		Bytes: x509.MarshalPKCS1PrivateKey(key),
+		// Bytes: x509.MarshalPKIXPublicKey(key),
 	}
 
 	err = pem.Encode(outFile, privateKey)

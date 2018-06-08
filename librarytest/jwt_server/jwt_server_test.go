@@ -1,8 +1,8 @@
 package jwt_server
 
 import (
+	"fmt"
 	"io/ioutil"
-	"log"
 	"testing"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -10,11 +10,12 @@ import (
 
 func TestJWTServer(t *testing.T) {
 
-	keyData, err := ioutil.ReadFile("private.pem")
+	keyData, err := ioutil.ReadFile("ca-key.pem")
 	if err != nil {
 		t.Error(err)
 	}
-	key, err := jwt.ParseRSAPrivateKeyFromPEM([]byte(keyData))
+
+	key, err := jwt.ParseRSAPrivateKeyFromPEM(keyData)
 	if err != nil {
 		t.Error(err)
 	}
@@ -24,5 +25,12 @@ func TestJWTServer(t *testing.T) {
 		t.Error(err)
 
 	}
-	log.Println(jwt)
+
+	fmt.Println(jwt)
+	jwtDecoder, err := ParseJWT(jwt)
+	if err != nil {
+		t.Error(err)
+	}
+
+	fmt.Println(jwtDecoder)
 }
