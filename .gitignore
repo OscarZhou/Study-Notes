@@ -13,3 +13,7 @@ algorithm/breadthFirstSearch/algorithm.o
 *.o
 algorithm/breadthFirstSearch/testorder.txt
 algorithm/AI/MyProg.exe
+librarytest/jwt_server/private.key
+librarytest/jwt_server/private.pem
+librarytest/jwt_server/public.key
+librarytest/jwt_server/public.pem
