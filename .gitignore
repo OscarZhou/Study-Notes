@@ -38,3 +38,5 @@ tools/dataTest/models/school_academic_ethnicity_qualification.go
 tools/dataTest/models/school_academic_gender_endorsement.go
 tools/dataTest/models/school_academic_gender_lit.go
 tools/dataTest/models/school_academic_gender_qualification.go
+tools/dataTest/debug.test
+tools/dataTest/models/nz_school_academic.go
