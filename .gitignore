@@ -40,3 +40,13 @@ tools/dataTest/models/school_academic_gender_lit.go
 tools/dataTest/models/school_academic_gender_qualification.go
 tools/dataTest/debug.test
 tools/dataTest/models/nz_school_academic.go
+librarytest/certificate/apiserver.pem
+librarytest/certificate/apiserver-key.pem
+librarytest/certificate/ca.pem
+librarytest/certificate/ca-key.pem
+librarytest/certificate/certificate.go
+librarytest/certificate/service-account.pem
+librarytest/certificate/service-account-key.pem
+librarytest/redis/redis.go
+librarytest/osin/debug
+librarytest/osin/osin.go
