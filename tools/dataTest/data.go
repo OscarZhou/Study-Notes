@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Study-Notes/tools/dataTest/models"
 	"fmt"
 	"reflect"
 
@@ -16,6 +17,33 @@ var (
 func init() {
 
 	tables = make(map[string]interface{})
+	tables["academic_decile_endorsements"] = &models.AcademicDecileEndorsement{}
+	tables["academic_decile_lits"] = &models.AcademicDecileLit{}
+	tables["academic_decile_qualifications"] = &models.AcademicDecileQualification{}
+
+	tables["academic_ethnicity_endorsements"] = &models.AcademicEthnicityEndorsement{}
+	tables["academic_ethnicity_lits"] = &models.AcademicEthnicityLit{}
+	tables["academic_ethnicity_qualifications"] = &models.AcademicEthnicityQualification{}
+
+	tables["academic_gender_endorsements"] = &models.AcademicGenderEndorsement{}
+	tables["academic_gender_lits"] = &models.AcademicGenderLit{}
+	tables["academic_gender_qualifications"] = &models.AcademicGenderQualification{}
+
+	tables["ncea_academic_endorsements"] = &models.NCEAAcademicEndorsement{}
+	tables["ncea_academic_lits"] = &models.NCEAAcademicLit{}
+	tables["ncea_academic_qualifications"] = &models.NCEAAcademicQualification{}
+
+	tables["ncea_school_academic_endorsements"] = &models.NCEASchoolAcademicEndorsement{}
+	tables["ncea_school_academic_lits"] = &models.NCEASchoolAcademicLit{}
+	tables["ncea_school_academic_qualifications"] = &models.NCEASchoolAcademicQualification{}
+
+	tables["school_academic_ethnicity_endorsements"] = &models.SchoolAcademicEthnicityEndorsement{}
+	tables["school_academic_ethnicity_lits"] = &models.SchoolAcademicEthnicityLit{}
+	tables["school_academic_ethnicity_qualifications"] = &models.SchoolAcademicEthnicityQualification{}
+
+	tables["school_academic_gender_endorsements"] = &models.SchoolAcademicGenderEndorsement{}
+	tables["school_academic_gender_lits"] = &models.SchoolAcademicGenderLit{}
+	tables["school_academic_gender_qualifications"] = &models.SchoolAcademicGenderQualification{}
 
 }
 
