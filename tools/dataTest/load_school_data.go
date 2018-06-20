@@ -738,7 +738,7 @@ func loadNCEASchoolAcademicQualification(db *gorm.DB, schoolAcademics *[]models.
 	}
 
 	// DecileBand
-	err = db.Where("name = ?", "Gender").Find(&category).Error
+	err = db.Where("name = ?", "National").Find(&category).Error
 	if err != nil {
 		return err
 	}

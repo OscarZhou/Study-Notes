@@ -183,12 +183,12 @@ func addEthnicity(db *gorm.DB) error {
 
 	var categories []models.NZCategory
 	name := "Ethnicity"
-	categories = append(categories, models.NZCategory{Name: name, Value: "NZ Maori"})
-	categories = append(categories, models.NZCategory{Name: name, Value: "Pasifika Peoples"})
-	categories = append(categories, models.NZCategory{Name: name, Value: "NZ European"})
-	categories = append(categories, models.NZCategory{Name: name, Value: "Asian"})
-	categories = append(categories, models.NZCategory{Name: name, Value: "Other"})
-	categories = append(categories, models.NZCategory{Name: name, Value: "All"})
+	categories = append(categories, models.NZCategory{Name: name, ParentID: 0, Value: "Maori"})
+	categories = append(categories, models.NZCategory{Name: name, ParentID: 0, Value: "Pasifika Peoples"})
+	categories = append(categories, models.NZCategory{Name: name, ParentID: 0, Value: "European"})
+	categories = append(categories, models.NZCategory{Name: name, ParentID: 0, Value: "Asian"})
+	categories = append(categories, models.NZCategory{Name: name, ParentID: 0, Value: "Other"})
+	categories = append(categories, models.NZCategory{Name: name, ParentID: 0, Value: "All"})
 	for _, category := range categories {
 		err = db.Create(&category).Error
 		if err != nil {
