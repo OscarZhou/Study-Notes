@@ -24,7 +24,7 @@ func LoadEntrancePercentageData() error {
 		models.SchoolDataByYear{},
 	)
 
-	db.LogMode(true)
+	// db.LogMode(true)
 
 	// query the entrance percentage based on school decile table data
 	var schoolDeciles []models.SchoolDecile
@@ -33,7 +33,7 @@ func LoadEntrancePercentageData() error {
 		return err
 	}
 
-	for i, v := range schoolDeciles {
+	for _, v := range schoolDeciles {
 		var (
 			schoolAcademic   models.NZSchoolAcademic
 			schoolDataByYear models.SchoolDataByYear
@@ -55,15 +55,13 @@ func LoadEntrancePercentageData() error {
 			continue
 		}
 		schoolDataByYear.SchoolID = v.SchoolID
-		schoolDataByYear.Year = v.Year
-		schoolDataByYear.Decile = v.Decile
-		schoolDataByYear.EntrancePercentage = schoolAcademic.CumulativeAchievementRate
+		schoolDataByYear.Year = 2017
+		schoolDataByYear.AdmissionRate = schoolAcademic.CumulativeAchievementRate
 
 		err = db.Create(&schoolDataByYear).Error
 		if err != nil {
 			return err
 		}
-		fmt.Println(i)
 	}
 
 	fmt.Printf("total: %d\n", len(schoolDeciles))
