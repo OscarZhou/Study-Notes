@@ -7,9 +7,10 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
+// ImportData imports all information data
 func ImportData() error {
 
-	db, err := gorm.Open("postgres", "host=192.168.239.132 user=postgres dbname=dataantapi sslmode=disable password=postgres")
+	db, err := gorm.Open("postgres", "")
 	defer db.Close()
 	if err != nil {
 		return err
