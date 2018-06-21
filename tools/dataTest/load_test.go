@@ -35,8 +35,14 @@ import "testing"
 // 	}
 // }
 
-func TestFillScholarshipYear(t *testing.T) {
-	if err := FillScholarshipYear(); err != nil {
+// func TestFillScholarshipYear(t *testing.T) {
+// 	if err := FillScholarshipYear(); err != nil {
+// 		panic(err)
+// 	}
+// }
+
+func TestSchoolRollCategory(t *testing.T) {
+	if err := ImportSchoolRollCategory(); err != nil {
 		panic(err)
 	}
 }

@@ -50,3 +50,6 @@ librarytest/certificate/service-account-key.pem
 librarytest/redis/redis.go
 librarytest/osin/debug
 librarytest/osin/osin.go
+tools/dataTest/models/school_roll.go
+tools/dataTest/models/school_roll_category.go
+tools/dataTest/models/*.*
