@@ -138,11 +138,10 @@ func loadAcademicDecileEndorsement(db *gorm.DB, academics *[]models.NZAcademic) 
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -178,27 +177,17 @@ func loadAcademicDecileEndorsement(db *gorm.DB, academics *[]models.NZAcademic) 
 			}
 		}
 
-		err = db.Where("name = ?", "Endorsement").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			join info_nz_performance_values ipv2 on ipv2.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? and ipv2.name = ?`, "Endorsement",
+			v.Endorsement, v.Qualification).Scan(&performance).Error
 		if err != nil {
 			return err
 		}
 
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and (ipv.title = ? OR ipv.title = ?)`, "Endorsement", "Qualification", "Endorsement").
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
-		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -219,11 +208,10 @@ func loadAcademicDecileLit(db *gorm.DB, academics *[]models.NZAcademic) error {
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -258,29 +246,15 @@ func loadAcademicDecileLit(db *gorm.DB, academics *[]models.NZAcademic) error {
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Lit").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Lit",
+			v.Certificate).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Certificate", []string{"Certificate"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -301,11 +275,10 @@ func loadAcademicDecileQualification(db *gorm.DB, academics *[]models.NZAcademic
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -340,29 +313,15 @@ func loadAcademicDecileQualification(db *gorm.DB, academics *[]models.NZAcademic
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Qualification").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Qualification",
+			v.Qualification).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Qualification", []string{"Qualification"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -383,11 +342,10 @@ func loadAcademicEthnicityEndorsement(db *gorm.DB, academics *[]models.NZAcademi
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -423,28 +381,7 @@ func loadAcademicEthnicityEndorsement(db *gorm.DB, academics *[]models.NZAcademi
 			}
 		}
 
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Endorsement").Find(&performance).Error
-		if err != nil {
-			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Endorsement", []string{"Endorsement", "Qualification"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
-		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -465,11 +402,10 @@ func loadAcademicEthnicityLit(db *gorm.DB, academics *[]models.NZAcademic) error
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -504,29 +440,15 @@ func loadAcademicEthnicityLit(db *gorm.DB, academics *[]models.NZAcademic) error
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Lit").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Lit",
+			v.Certificate).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Certificate", []string{"Certificate"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -547,11 +469,10 @@ func loadAcademicEthnicityQualification(db *gorm.DB, academics *[]models.NZAcade
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -586,29 +507,15 @@ func loadAcademicEthnicityQualification(db *gorm.DB, academics *[]models.NZAcade
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Qualification").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Qualification",
+			v.Qualification).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Qualification", []string{"Qualification"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -629,11 +536,10 @@ func loadAcademicGenderEndorsement(db *gorm.DB, academics *[]models.NZAcademic) 
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -668,29 +574,16 @@ func loadAcademicGenderEndorsement(db *gorm.DB, academics *[]models.NZAcademic) 
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Endorsement").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			join info_nz_performance_values ipv2 on ipv2.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? and ipv2.name = ?`, "Endorsement",
+			v.Endorsement, v.Qualification).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Endorsement", []string{"Endorsement", "Qualification"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -711,11 +604,10 @@ func loadAcademicGenderLit(db *gorm.DB, academics *[]models.NZAcademic) error {
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -750,29 +642,15 @@ func loadAcademicGenderLit(db *gorm.DB, academics *[]models.NZAcademic) error {
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Lit").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Lit",
+			v.Certificate).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Certificate", []string{"Certificate"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -793,11 +671,10 @@ func loadAcademicGenderQualification(db *gorm.DB, academics *[]models.NZAcademic
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			categories        []models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			categories  []models.NZCategory
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -833,26 +710,6 @@ func loadAcademicGenderQualification(db *gorm.DB, academics *[]models.NZAcademic
 			}
 		}
 
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Qualification").Find(&performance).Error
-		if err != nil {
-			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Qualification", []string{"Qualification"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
-		}
 		academic.PerformanceID = performance.ID
 		academic.Performance = performance
 		*academics = append(*academics, academic)
@@ -881,11 +738,9 @@ func loadNCEAAcademicEndorsement(db *gorm.DB, academics *[]models.NZAcademic) er
 	}
 	for _, v := range entities {
 		var (
-			yealLevels []models.NZYearLevel
-
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -897,7 +752,15 @@ func loadNCEAAcademicEndorsement(db *gorm.DB, academics *[]models.NZAcademic) er
 		if err != nil {
 			return err
 		}
-
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			join info_nz_performance_values ipv2 on ipv2.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? and ipv2.name = ?`, "Endorsement",
+			v.Endorsement, v.Qualification).Scan(&performance).Error
+		if err != nil {
+			return err
+		}
 		for _, yearLevel := range yealLevels {
 			if yearLevel.Level == v.YearLevel {
 				academic.YearLevelID = yearLevel.ID
@@ -906,27 +769,7 @@ func loadNCEAAcademicEndorsement(db *gorm.DB, academics *[]models.NZAcademic) er
 			}
 		}
 
-		err = db.Where("name = ?", "Endorsement").Find(&performance).Error
-		if err != nil {
-			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and (ipv.title = ? OR ipv.title = ?)`, "Endorsement", "Qualification", "Endorsement").
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
-		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -954,11 +797,9 @@ func loadNCEAAcademicLit(db *gorm.DB, academics *[]models.NZAcademic) error {
 
 	for _, v := range entities {
 		var (
-			yealLevels []models.NZYearLevel
-
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
@@ -978,29 +819,15 @@ func loadNCEAAcademicLit(db *gorm.DB, academics *[]models.NZAcademic) error {
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Lit").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Lit",
+			v.Certificate).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Certificate", []string{"Certificate"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
@@ -1028,17 +855,15 @@ func loadNCEAAcademicQualification(db *gorm.DB, academics *[]models.NZAcademic) 
 
 	for _, v := range entities {
 		var (
-			yealLevels        []models.NZYearLevel
-			category          models.NZCategory
-			performance       models.NZPerformance
-			academic          models.NZAcademic
-			performanceValues []models.NZPerformanceValue
+			yealLevels  []models.NZYearLevel
+			performance models.NZPerformance
+			academic    models.NZAcademic
 		)
 
 		academic.Year = v.Year
 		academic.CurrentAchievementRate = v.CurrentAchievementRate
 		academic.CumulativeAchievementRate = v.CumulativeAchievementRate
-		academic.ID = category.ID
+		academic.CategoryID = category.ID
 
 		err = db.Find(&yealLevels).Error
 		if err != nil {
@@ -1052,29 +877,15 @@ func loadNCEAAcademicQualification(db *gorm.DB, academics *[]models.NZAcademic) 
 				break
 			}
 		}
-
-		// Endorsement, Lit, Qualifaction
-		err = db.Where("name = ?", "Qualification").Find(&performance).Error
+		err = db.Raw(`select ip.* 
+			from info_nz_performances ip 
+			join info_nz_performance_values ipv1 on ipv1.performance_id = ip.id 
+			where ip.name = ? and ipv1.name = ? `, "Qualification",
+			v.Qualification).Scan(&performance).Error
 		if err != nil {
 			return err
-		}
-
-		err = db.
-			Raw(`select ipv.* from info_nz_performances ip
-			join info_nz_performance_values ipv on ipv.performance_id = ip.id
-			where ip.name = ? and ipv.title in (?)`, "Qualification", []string{"Qualification"}).
-			Find(&performanceValues).Error
-		if err != nil {
-			return err
-		}
-
-		for _, performanceValue := range performanceValues {
-			if performanceValue.PerformanceID == performance.ID {
-				performance.PerformanceValue = append(performance.PerformanceValue, performanceValue)
-			}
 		}
 		academic.PerformanceID = performance.ID
-		academic.Performance = performance
 		*academics = append(*academics, academic)
 	}
 
