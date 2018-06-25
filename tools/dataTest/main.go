@@ -8,7 +8,7 @@ import (
 )
 
 // ImportData imports all information data
-func ImportData() error {
+func ImportInfoTableData() error {
 
 	db, err := gorm.Open("postgres", "")
 	defer db.Close()
@@ -166,7 +166,6 @@ func addGender(db *gorm.DB) error {
 	name := "Gender"
 	categories = append(categories, models.NZCategory{Name: name, Value: "Male"})
 	categories = append(categories, models.NZCategory{Name: name, Value: "Female"})
-	categories = append(categories, models.NZCategory{Name: name, Value: "Unknown"})
 	categories = append(categories, models.NZCategory{Name: name, Value: "All"})
 	for _, category := range categories {
 		err = db.Create(&category).Error
@@ -236,7 +235,7 @@ func addNation(db *gorm.DB) error {
 }
 
 func main() {
-	err := ImportData()
+	err := ImportInfoTableData()
 	if err != nil {
 		panic(err)
 	}

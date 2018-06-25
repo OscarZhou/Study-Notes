@@ -56,20 +56,59 @@ func LoadSchoolData() error {
 		return err
 	}
 
+	err = batchCreate(db, schoolAcademics)
+	if err != nil {
+		return err
+	}
 	// 7
-	if err = loadNCEASchoolAcademicEndorsement(db, &schoolAcademics); err != nil {
+	if err = loadNCEASchoolAcademicEndorsement(db, &schoolAcademics, "Gender", "All"); err != nil {
 		return err
 	}
 	// 8
-	if err = loadNCEASchoolAcademicLit(db, &schoolAcademics); err != nil {
+	if err = loadNCEASchoolAcademicLit(db, &schoolAcademics, "Gender", "All"); err != nil {
 		return err
 	}
 
 	// 9
-	if err = loadNCEASchoolAcademicQualification(db, &schoolAcademics); err != nil {
+	if err = loadNCEASchoolAcademicQualification(db, &schoolAcademics, "Gender", "All"); err != nil {
 		return err
 	}
 
+	// 10
+	if err = loadNCEASchoolAcademicEndorsement(db, &schoolAcademics, "Ethnicity", "All"); err != nil {
+		return err
+	}
+	// 11
+	if err = loadNCEASchoolAcademicLit(db, &schoolAcademics, "Ethnicity", "All"); err != nil {
+		return err
+	}
+
+	// 12
+	if err = loadNCEASchoolAcademicQualification(db, &schoolAcademics, "Ethnicity", "All"); err != nil {
+		return err
+	}
+	// 14
+	if err = loadNCEASchoolAcademicEndorsement(db, &schoolAcademics, "National", "National"); err != nil {
+		return err
+	}
+	// 15
+	if err = loadNCEASchoolAcademicLit(db, &schoolAcademics, "National", "National"); err != nil {
+		return err
+	}
+
+	// 16
+	if err = loadNCEASchoolAcademicQualification(db, &schoolAcademics, "National", "National"); err != nil {
+		return err
+	}
+
+	err = batchCreate(db, schoolAcademics)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func batchCreate(db *gorm.DB, schoolAcademics []models.NZSchoolAcademic) error {
 	insertSQL := `INSERT INTO nz_school_academics (school_id, year, year_level_id, category_id, performance_id, current_achievement_rate, cumulative_achievement_rate, decile_band) VALUES `
 	for i, v := range schoolAcademics {
 		insertSQL += ("(" + strconv.FormatUint(uint64(v.SchoolID), 10) + ", " + strconv.FormatUint(uint64(v.Year), 10) + "," + strconv.FormatUint(uint64(v.YearLevelID), 10) + "," + strconv.FormatUint(uint64(v.CategoryID), 10) + "," + strconv.FormatUint(uint64(v.PerformanceID), 10) + "," + strconv.FormatFloat(v.CurrentAchievementRate, 'f', 4, 64) + "," + strconv.FormatFloat(v.CumulativeAchievementRate, 'f', 4, 64) + ", '" + v.DecileBand + "'),")
@@ -88,7 +127,6 @@ func LoadSchoolData() error {
 			}
 		}
 	}
-
 	return nil
 }
 
@@ -571,7 +609,7 @@ func loadSchoolAcademicGenderQualification(db *gorm.DB, schoolAcademics *[]model
 	return nil
 }
 
-func loadNCEASchoolAcademicEndorsement(db *gorm.DB, schoolAcademics *[]models.NZSchoolAcademic) error {
+func loadNCEASchoolAcademicEndorsement(db *gorm.DB, schoolAcademics *[]models.NZSchoolAcademic, cateName, cateValue string) error {
 	var (
 		entities []models.NCEASchoolAcademicEndorsement
 		err      error
@@ -591,7 +629,7 @@ func loadNCEASchoolAcademicEndorsement(db *gorm.DB, schoolAcademics *[]models.NZ
 	}
 
 	// DecileBand
-	err = db.Where("name = ?", "National").Find(&category).Error
+	err = db.Where("name = ? and value = ?", cateName, cateValue).Find(&category).Error
 	if err != nil {
 		return err
 	}
@@ -645,7 +683,7 @@ func loadNCEASchoolAcademicEndorsement(db *gorm.DB, schoolAcademics *[]models.NZ
 	return nil
 }
 
-func loadNCEASchoolAcademicLit(db *gorm.DB, schoolAcademics *[]models.NZSchoolAcademic) error {
+func loadNCEASchoolAcademicLit(db *gorm.DB, schoolAcademics *[]models.NZSchoolAcademic, cateName, cateValue string) error {
 	var (
 		entities []models.NCEASchoolAcademicLit
 		err      error
@@ -665,7 +703,7 @@ func loadNCEASchoolAcademicLit(db *gorm.DB, schoolAcademics *[]models.NZSchoolAc
 	}
 
 	// DecileBand
-	err = db.Where("name = ?", "National").Find(&category).Error
+	err = db.Where("name = ? and value = ?", cateName, cateValue).Find(&category).Error
 	if err != nil {
 		return err
 	}
@@ -718,7 +756,7 @@ func loadNCEASchoolAcademicLit(db *gorm.DB, schoolAcademics *[]models.NZSchoolAc
 	return nil
 }
 
-func loadNCEASchoolAcademicQualification(db *gorm.DB, schoolAcademics *[]models.NZSchoolAcademic) error {
+func loadNCEASchoolAcademicQualification(db *gorm.DB, schoolAcademics *[]models.NZSchoolAcademic, cateName, cateValue string) error {
 	var (
 		entities []models.NCEASchoolAcademicQualification
 		err      error
@@ -738,7 +776,7 @@ func loadNCEASchoolAcademicQualification(db *gorm.DB, schoolAcademics *[]models.
 	}
 
 	// DecileBand
-	err = db.Where("name = ?", "National").Find(&category).Error
+	err = db.Where("name = ? and value = ?", cateName, cateValue).Find(&category).Error
 	if err != nil {
 		return err
 	}

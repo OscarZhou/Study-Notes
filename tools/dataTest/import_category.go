@@ -58,7 +58,7 @@ func ImportCategory() error {
 	categories = append(categories, models.NZCategory{Value: "NZ Maori", Name: category.Name, ParentID: category.ID})
 	// Pacific People
 	category = models.NZCategory{}
-	err = db.Where("name = ? and value = ?", "Ethnicity", "Pacific Peoples").Find(&category).Error
+	err = db.Where("name = ? and value = ?", "Ethnicity", "Pasifika Peoples").Find(&category).Error
 	if err != nil {
 		return err
 	}
