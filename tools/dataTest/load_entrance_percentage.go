@@ -54,10 +54,13 @@ func LoadEntrancePercentageData() error {
 		// 	continue
 		// }
 
-		if v.YearLevel == 13 && v.Qualification == "University Entrance" {
+		if (v.YearLevel == 13 && v.Qualification == "University Entrance") ||
+			(v.YearLevel == 12 && v.Qualification == "NCEA Level 2") ||
+			(v.YearLevel == 11 && v.Qualification == "NCEA Level 1") {
 			schoolDataByYear.SchoolID = v.SchoolID
 			schoolDataByYear.Year = v.Year
-			schoolDataByYear.AdmissionRate = v.CumulativeAchievementRate
+			schoolDataByYear.YearLevel = v.YearLevel
+			schoolDataByYear.PassRate = v.CumulativeAchievementRate
 
 			err = db.Create(&schoolDataByYear).Error
 			if err != nil {
