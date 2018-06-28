@@ -54,3 +54,13 @@ librarytest/osin/osin.go
 tools/dataTest/models/school_roll.go
 tools/dataTest/models/school_roll_category.go
 tools/dataTest/models/*.*
+tools/questionaire_data/models/types/question_type.go
+tools/questionaire_data/models/analysis.go
+tools/questionaire_data/models/analysis_input.go
+tools/questionaire_data/models/dynamic_form.go
+tools/questionaire_data/models/dynamic_form_group.go
+tools/questionaire_data/models/dynamic_form_group_type.go
+tools/questionaire_data/models/dynamic_form_option.go
+tools/questionaire_data/models/dynamic_form_question.go
+tools/questionaire_data/models/supported_language.go
+tools/questionaire_data/models/translation.go
