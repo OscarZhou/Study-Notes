@@ -14,15 +14,35 @@ func ImportCategory() error {
 		return err
 	}
 
-	// db.DropTable(
-	// 	models.NZCategory{},
-	// )
+	db.DropTable(
+		models.NZCategory{},
+	)
 
-	// db.AutoMigrate(
-	// 	models.NZCategory{},
-	// )
+	db.AutoMigrate(
+		models.NZCategory{},
+	)
 
 	db.LogMode(true)
+
+	err = addGender(db)
+	if err != nil {
+		panic(err)
+	}
+
+	err = addEthnicity(db)
+	if err != nil {
+		panic(err)
+	}
+
+	err = addDecileBand(db)
+	if err != nil {
+		panic(err)
+	}
+
+	err = addNation(db)
+	if err != nil {
+		panic(err)
+	}
 
 	var category models.NZCategory
 	// European
