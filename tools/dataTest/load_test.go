@@ -7,8 +7,8 @@ import "testing"
 // 	if err != nil {
 // 		t.Error(err)
 // 	}
-
 // }
+
 // func TestAcademicData(t *testing.T) {
 // 	err := SaveIntegratedData()
 // 	if err != nil {
@@ -41,8 +41,30 @@ import "testing"
 // 	}
 // }
 
-func TestSchoolRollCategory(t *testing.T) {
-	if err := ImportSchoolRollCategory(); err != nil {
+// func TestSchoolRollCategory(t *testing.T) {
+// 	if err := ImportSchoolRollCategory(); err != nil {
+// 		panic(err)
+// 	}
+// }
+
+// func TestFilterSchoolZone(t *testing.T) {
+// 	if err := FilterSchoolZone(); err != nil {
+// 		panic(err)
+// 	}
+// }
+
+// func TestFilterMeshblock(t *testing.T) {
+// 	if err := FilterMeshblock(); err != nil {
+// 		panic(err)
+// 	}
+// }
+// func TestAddExtraCurriculumCategory(t *testing.T) {
+// 	if err := AddExtraCurriculumCategory(); err != nil {
+// 		panic(err)
+// 	}
+// }
+func TestFillCategoryIDForExtraCurriculum(t *testing.T) {
+	if err := FillCategoryID2ExtraCurriculum(); err != nil {
 		panic(err)
 	}
 }

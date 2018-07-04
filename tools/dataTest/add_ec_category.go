@@ -28,7 +28,7 @@ func AddExtraCurriculumCategory() error {
 }
 
 func AddECLevel2Type2Category(db *gorm.DB) error {
-	var extraCurriculumCategories []models.ExtraCurriculumCategory
+	var extraCurriculumCategories []models.ExtraCCCategory
 	err := db.Find(&extraCurriculumCategories).Error
 	if err != nil {
 		return err
@@ -57,7 +57,7 @@ func AddECLevel2Type2Category(db *gorm.DB) error {
 }
 
 func AddECLevel1Type2Category(db *gorm.DB) error {
-	var extraCurriculumCategories []models.ExtraCurriculumCategory
+	var extraCurriculumCategories []models.ExtraCCCategory
 	err := db.Find(&extraCurriculumCategories).Error
 	if err != nil {
 		return err

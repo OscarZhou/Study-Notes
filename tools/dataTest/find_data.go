@@ -89,7 +89,7 @@ func FindData() error {
 
 	}
 
-	for i, _ := range performanceValueMap {
+	for i := range performanceValueMap {
 		fmt.Println(i)
 	}
 
