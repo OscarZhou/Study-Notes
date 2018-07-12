@@ -15,6 +15,14 @@ func AddExtraCurriculumCategory() error {
 		return err
 	}
 
+	// db.DropTable(
+	// 	models.ExtraCCCategory{},
+	// )
+
+	// db.AutoMigrate(
+	// 	models.ExtraCCCategory{},
+	// )
+
 	err = AddECLevel1Type2Category(db)
 	if err != nil {
 		return err
@@ -36,7 +44,7 @@ func AddECLevel2Type2Category(db *gorm.DB) error {
 	tx := db.Begin()
 	for _, v := range extraCurriculumCategories {
 		var parentCategory models.NZCategory
-		err = tx.Where("name = ? and value = ? and parent_id = ?", "ExtraCurriculum", v.Name, 0).Find(&parentCategory).Error
+		err = tx.Where("name = ? and value = ? and parent_id = ?", "ExtraCurriculum", v.Type, 0).Find(&parentCategory).Error
 		if err != nil {
 			tx.Rollback()
 			return err
@@ -44,7 +52,7 @@ func AddECLevel2Type2Category(db *gorm.DB) error {
 
 		var category models.NZCategory
 		category.Name = parentCategory.Name
-		category.Value = v.Type
+		category.Value = v.Name
 		category.ParentID = parentCategory.ID
 		err = tx.Create(&category).Error
 		if err != nil {
@@ -65,9 +73,9 @@ func AddECLevel1Type2Category(db *gorm.DB) error {
 
 	var ecCategories = make(map[string]bool)
 	for _, v := range extraCurriculumCategories {
-		_, exist := ecCategories[v.Name]
+		_, exist := ecCategories[v.Type]
 		if !exist {
-			ecCategories[v.Name] = true
+			ecCategories[v.Type] = true
 		}
 	}
 

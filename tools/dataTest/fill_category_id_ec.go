@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -23,23 +24,24 @@ func FillCategoryID2ExtraCurriculum() error {
 
 	// db.LogMode(true)
 
-	// invalidEC, err := fillExtraCurriculumActivityType(db)
-	// if err != nil {
-	// 	return err
-	// }
+	invalidEC, err := fillExtraCurriculumActivityType(db)
+	if err != nil {
+		return err
+	}
 
-	// err = export2Csv(invalidEC)
+	err = export2Csv(invalidEC)
+	if err != nil {
+		return err
+	}
+
+	// invalidEC, err := loadUnknownFields(db)
 	// if err != nil {
 	// 	return err
 	// }
-	invalidEC, err := loadUnknownFields(db)
-	if err != nil {
-		return err
-	}
-	err = export2Csv1(invalidEC)
-	if err != nil {
-		return err
-	}
+	// err = export2Csv1(invalidEC)
+	// if err != nil {
+	// 	return err
+	// }
 
 	return nil
 }
@@ -63,16 +65,27 @@ func fillExtraCurriculumActivityType(db *gorm.DB) ([]models.ExtraCurriculum, err
 			continue
 		}
 
+		v.ActivityType = strings.Replace(v.ActivityType, "\r\n", "", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "\r", "", -1)
 		v.ActivityType = strings.Replace(v.ActivityType, "\n", "", -1)
-		// v.ActivityType = strings.Replace(v.ActivityType, "&", " ", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "/", ",", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "<U+200B>", "", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "and", "&", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "&", ",", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, ", ", ",", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, " ,", ",", -1)
 		v.ActivityType = strings.Replace(v.ActivityType, "  ", " ", -1)
 		activityTypes := strings.Split(v.ActivityType, ",")
 		for i, t := range activityTypes {
-
+			re := regexp.MustCompile(`\W`).ReplaceAllString
+			activityTypes[i] = re(activityTypes[i], "")
 			activityTypes[i] = strings.TrimSpace(t)
 			if activityTypes[i] == "Athletics" {
 				activityTypes[i] = "Athletic"
+			} else if strings.ToLower(activityTypes[i]) == "dance" {
+				activityTypes[i] = "Dancing"
 			}
+
 		}
 
 		for _, actv := range activityTypes {
@@ -105,15 +118,15 @@ func fillExtraCurriculumActivityType(db *gorm.DB) ([]models.ExtraCurriculum, err
 	fmt.Println("count1=", count1)
 	fmt.Println("count2=", count2)
 	fmt.Println("count3=", count3)
-	// for _, v := range invalidEC {
-	// 	fmt.Printf("ec id = %d, name = %s, activity type = %s\n", v.ID, v.Name, v.ActivityType)
-	// }
+	for _, v := range invalidEC {
+		fmt.Printf("ec id = %d, name = %s, activity type = %s\n", v.ID, v.Name, v.ActivityType)
+	}
 	fmt.Println("invalid number is ", len(invalidEC))
 	return invalidEC, nil
 }
 
 func export2Csv(extraCurr []models.ExtraCurriculum) error {
-	file, err := os.Create("unknownCategory.csv")
+	file, err := os.Create("unmatchCategory.csv")
 	if err != nil {
 		return err
 	}
@@ -226,18 +239,32 @@ func loadUnknownFields(db *gorm.DB) ([][]string, error) {
 	for _, v := range extraCurriculums {
 		if v.ActivityType == "" {
 			count1++
+			id := strconv.FormatUint(uint64(v.ID), 10)
+			invalidEC = append(invalidEC, []string{id, ""})
 			continue
 		}
 
+		v.ActivityType = strings.Replace(v.ActivityType, "\r\n", "", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "\r", "", -1)
 		v.ActivityType = strings.Replace(v.ActivityType, "\n", "", -1)
-		// v.ActivityType = strings.Replace(v.ActivityType, "&", " ", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "/", ",", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "<U+200B>", "", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "and", "&", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, "&", ",", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, ", ", ",", -1)
+		v.ActivityType = strings.Replace(v.ActivityType, " ,", ",", -1)
 		v.ActivityType = strings.Replace(v.ActivityType, "  ", " ", -1)
 		activityTypes := strings.Split(v.ActivityType, ",")
 		for i, t := range activityTypes {
+			re := regexp.MustCompile(`\W`).ReplaceAllString
+			activityTypes[i] = re(activityTypes[i], "")
 			activityTypes[i] = strings.TrimSpace(t)
 			if activityTypes[i] == "Athletics" {
 				activityTypes[i] = "Athletic"
+			} else if strings.ToLower(activityTypes[i]) == "dance" {
+				activityTypes[i] = "Dancing"
 			}
+
 		}
 
 		for _, actv := range activityTypes {
