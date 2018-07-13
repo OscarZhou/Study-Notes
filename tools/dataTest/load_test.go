@@ -63,8 +63,21 @@ import "testing"
 // 		panic(err)
 // 	}
 // }
-func TestFillCategoryIDForExtraCurriculum(t *testing.T) {
-	if err := FillCategoryID2ExtraCurriculum(); err != nil {
+
+// func TestFillCategoryIDForExtraCurriculum(t *testing.T) {
+// 	if err := FillCategoryID2ExtraCurriculum(); err != nil {
+// 		panic(err)
+// 	}
+// }
+
+// func TestAddSchoolURL(t *testing.T) {
+// 	if err := AddSchoolURL(); err != nil {
+// 		panic(err)
+// 	}
+// }
+
+func TestAddUnkownECCategory(t *testing.T) {
+	if err := AddUnknownExtraCurriculumCategory(); err != nil {
 		panic(err)
 	}
 }
