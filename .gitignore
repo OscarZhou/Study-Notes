@@ -66,3 +66,4 @@ tools/questionaire_data/models/supported_language.go
 tools/questionaire_data/models/translation.go
 tools/dataTest/unknownCategory.csv
 tools/dataTest/unmatchCategory.csv
+tools/dataTest/school_zone_pos.txt
