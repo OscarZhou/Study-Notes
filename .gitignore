@@ -64,3 +64,5 @@ tools/questionaire_data/models/dynamic_form_option.go
 tools/questionaire_data/models/dynamic_form_question.go
 tools/questionaire_data/models/supported_language.go
 tools/questionaire_data/models/translation.go
+tools/dataTest/unknownCategory.csv
+tools/dataTest/unmatchCategory.csv

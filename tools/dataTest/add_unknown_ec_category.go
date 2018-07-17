@@ -2,7 +2,7 @@ package main
 
 import (
 	"Study-Notes/tools/dataTest/models"
-	"fmt"
+	"strings"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -47,14 +47,22 @@ func addUnknownECCategory(db *gorm.DB) error {
 		}
 
 		var category models.NZCategory
-		if err := tx.Where("name = ? and value = ?", "ExtraCurriculum", v.Activity).Find(&category).Error; err != nil {
+		if err := tx.Where("name = ? and value = ?", "ExtraCurriculum", strings.TrimSpace(v.Activity)).Find(&category).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
+
+		if err := tx.Model(&ec).Association("Categories").Clear().Error; err != nil {
 			tx.Rollback()
 			return err
 		}
 
 		ec.Categories = append(ec.Categories, category)
-		fmt.Println(ec.Categories)
 
+		if err := tx.Save(&ec).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
 	}
 
 	tx.Commit()
